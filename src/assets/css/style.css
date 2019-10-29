@@ -1,0 +1,29 @@
+﻿body {font-family:"microsoft yahei",simsun,Tahoma,sans-serif;color: #fff;margin: 0;padding: 0;font-size: 22px;}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { margin:0; padding:0; }
+ol,ul {list-style:none; }
+h1,h2,h3,h4,h5,h6,button,input,select,textarea {font-size:100%;}
+.main-content{position: absolute; width: 100%; height: 100%;}
+.bgimg{width: 100%; height: 100%;position: absolute; left: 0; top: 0; z-index: -1}
+table{width: 100%;height: 100%;}
+.main-content .content{padding: 10px;background: url(../images/mainface.png); left: 0; top: 0;z-index: -1;}
+.head-top{width: 100%; height: 100%; position: relative; min-height: 100px;}
+.head-top .logo{position: absolute; margin-left: 2%; top: 5px;height: 100%;}
+.head-top .time{text-align:center}
+.tmbg{background: url('../images/bg-tm.png');width: 100%; height: 100%}
+.middle-box{height: 95%; width: 100%;}
+.middle-box .quxian{border-radius: 15px; min-height: 200px;}
+
+.item-box{width: 98%; overflow: hidden; position: relative; height: 100%; padding: 5px;}
+.item-box .item{float: left;border-radius: 15px;margin: 0 15px 0px 0; width: 195px; height: 130px;}
+.item-box .item .info{padding: 19px 0;text-align: center;}
+.item-box .item .info .title{font-weight:bold}
+.item-box .item .info .unit{ font-weight: bold;font-size: 15px}
+.item-box .item .value{ text-align: center; font-weight: bold;font-size: 35px}
+
+.weather ul li{ font-size: 18px;color: #bde5fd;line-height: 30px}
+.zhibiao .title td{ vertical-align: top;}
+.zhibiao .zhibiao-color{min-width: 30px;height: 20px;display: block;border-radius: 3px}
+.zhibiao .zhibiao-title{width: 30px; display: inline-block; font-size: 16px;}
+
+.footer{clear: both; padding-left: 2%;}
+.footer .title{font-weight: bold; font-size: 20px;}
