@@ -333,7 +333,7 @@
         watch:{
             dataArrreact: {
                 handler(newVal, oldVal) {
-                    console.log("tag", newVal);
+                    window.console.log("tag", newVal);
                 },
             },
             data(){
