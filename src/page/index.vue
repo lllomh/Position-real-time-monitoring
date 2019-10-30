@@ -313,6 +313,7 @@
         data () {
             return {
                 data:'',
+                charts:null,
                 datas:'',
                 data_r:'',
                 data_rs:'',
@@ -323,10 +324,27 @@
                 verticalAlign: 'middle',
                 position: 'insideBottom',
                 distance: 15,
+                obgdata:{}
             }
         },
         computed:{
 
+        },
+        watch:{
+            dataArrreact: {
+                handler(newVal, oldVal) {
+                    console.log("tag", newVal);
+                },
+                    data(){
+              this.$nextTick(function() {
+                  this.drawPie('main')
+              })
+            },
+            datas(){
+                this.$nextTick(function() {
+                    this.drawPie('main')
+                })
+            }
         },
         mounted() {
             this.getdata();
@@ -335,14 +353,20 @@
             this.getdatar()
             this.getdatars()
 
-            this.$nextTick(function() {
-                this.drawPie('main')
-            })
+
 
             window.console.log(this.dataArrreact)
             // window.console.log(this.data_rs)
         },
-        methods:{
+
+        beforeDestroy() {
+            if (!this.charts) {
+                return;
+            }
+            this.charts.dispose();
+            this.charts = null;
+        },
+            methods:{
             drawPie(id){
                 var labelOption = {
                     normal: {
@@ -414,13 +438,13 @@
                             type: 'bar',
                             barGap: 0,
                             label: labelOption,
-                            data: [320, 332, 301, 334, 390]
+                            data: this.dataArrreact
                         },
                         {
                             name: 'vue.js',
                             type: 'bar',
                             label: labelOption,
-                            data: [220, 182, 191, 234, 290]
+                            data: this.dataArrvue
                         }
                     ]
                 })
@@ -432,8 +456,19 @@
                 this.$post(P_GET_CONT,postData).then(res => {
                     if(res.code==200){
                         this.data=res.data;
-                        this.dataArrreact.push(res.data);
+                        window.console.log(res.data);
+                        let obgdata = {};
+                          obgdata.ga= this.strs(res.data? res.data.ga.content :'');
+                          obgdata.sh= this.strs(res.data? res.data.sh.content:'');
+                          obgdata.bj= this.strs(res.data? res.data.bj.content:'');
+                          obgdata.sz= this.strs(res.data? res.data.sz.content:'');
+                          obgdata.gz= this.strs(res.data? res.data.gz.content:'');
+
+                        for (let i in obgdata) {
+                            this.dataArrreact.push(obgdata[i]); //值
+                        }
                         setTimeout(()=>{
+                            this.dataArrreact=[]
                             this.getdata()
                         },2000)
                     }
@@ -447,7 +482,18 @@
                 this.$post(P_GET_CONTS,postData).then(res => {
                     if(res.code==200){
                         this.datas=res.data;
+                        let obgdata = {};
+                        obgdata.ga= this.strs(res.data? res.data.ga.content :'');
+                        obgdata.sh= this.strs(res.data? res.data.sh.content:'');
+                        obgdata.bj= this.strs(res.data? res.data.bj.content:'');
+                        obgdata.sz= this.strs(res.data? res.data.sz.content:'');
+                        obgdata.gz= this.strs(res.data? res.data.gz.content:'');
+
+                        for (let i in obgdata) {
+                            this.dataArrvue.push(obgdata[i]); //值
+                        }
                         setTimeout(()=>{
+                            this.dataArrvue=[]
                             this.getdatas()
                         },2000)
                     }

@@ -25,7 +25,7 @@
                 let _this = this
 
                 let step = (_this.value * 10) / (_this.time * 1000)
-                window.console.log(step)
+                // window.console.log(step)
                 let current = 0
                 let start = 0
                 let t = setInterval(function () {
