@@ -335,7 +335,8 @@
                 handler(newVal, oldVal) {
                     console.log("tag", newVal);
                 },
-                    data(){
+            },
+            data(){
               this.$nextTick(function() {
                   this.drawPie('main')
               })
