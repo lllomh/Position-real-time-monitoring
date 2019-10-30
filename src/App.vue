@@ -1,6 +1,7 @@
 <template>
-  <div>
-
+  <div class="app">
+    <!-- 路由对应组件的显示 -->
+    <router-view></router-view>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="number-grow-warp">
-        <span ref="numberGrow" :data-time="time" class="number-grow" :data-value="value">0</span>
+        <span ref="numberGrow" :data-time="time" class="" :data-value="value">0</span>
     </div>
 </template>
 

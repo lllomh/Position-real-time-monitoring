@@ -11,5 +11,10 @@ if (process.env.NODE_ENV === "production") {
 
 export const P_GET_CONT = $api+'frontapi/get_cont';
 export const P_GET_CONTS = $api+'frontapi/get_conts';
+export const P_GET_ALL = $api+'frontapi/get_conts_all';
+export const P_GET_ALLS = $api+'frontapi/get_conts_alls';
+
+
+
 export const P_BOARD_DITIAL = $api+'frontapi/board_test_detail';
 export const P_BOARD_LIST = $api+'frontapi/boardList';

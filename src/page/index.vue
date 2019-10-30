@@ -23,7 +23,8 @@
                                         <tr style="height: 70%; vertical-align: top">
                                             <td style="vertical-align: top">
                                                 <div class="middle-box">
-                                                    <div class="tmbg quxian" id="59053893-quxian">
+                                                    <div class="tmbg quxian">
+                                                        <div id="main" style="width:100%;height: 100%;"></div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -183,83 +184,96 @@
                                 </div>
                             </td>
                             <td style="width: 30%; min-width: 240px; top: 0; right: 0; position: relative; vertical-align: top;">
-                                <table>
+                                <table class="tablisty">
+                                    <thead>
+                                       <tr>
+                                           <th>城市</th>
+                                           <th>react.js实时职位数量</th>
+                                           <th>vue.js实时职位数量</th>
+                                       </tr>
+                                    </thead>
+                                    <tbody>
                                     <tr>
-                                        <td style="position: relative;">
-                                            <div style="top: 0;">
-                                                <img src="../assets/images/00.png" style="width: 50%; padding-left: 15%; margin-top: -120px" id="weatherpic" title="晴" />
-                                            </div>
-                                        </td>
+                                        <td>重庆</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.cq.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cq.content :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
-                                        <td>
-                                            <table>
-                                                <tr>
-                                                    <td style="width: 65%; padding-left: 10%">
-                                                        <div class="weather">
-                                                            <ul>
-                                                                <li>
-                                                                    <i></i>室外温度：<b id="wendu">--</b>
-                                                                </li>
-                                                                <li>
-                                                                    <i></i>室外湿度：<b id="shidu">--</b>
-                                                                </li>
-                                                                <li>
-                                                                    <i></i>室外PM2.5：<b id="pm25">--</b>
-                                                                </li>
-                                                                <li>
-                                                                    <i></i>室外AQI：<b id="aqi">--</b>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div style="font-size: 40px; text-align: center; font-weight: bold;">
-                                                            <span>上海</span>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
+                                        <td>赣州</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.gzgz.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.gzgz.content :'')"></NumberGrows></td>
                                     </tr>
-                                    <tr style="height: 40%;">
-                                        <td>
-                                            <div style="padding-left: 30px; height: 100%;">
-                                                <div style="border-top: 2px dashed"></div>
-                                                <div style="height: 98%; min-height: 130px; text-align: center">
-                                                    <table class="zhibiao">
-
-
-                                                        <tr>
-                                                            <td><span class="zhibiao-color" style="background-color: #00a040;"></span></td>
-                                                            <td><span class="zhibiao-color" style="background-color: #dbbc49;"></span></td>
-                                                            <td><span class="zhibiao-color" style="background-color: #fc703a;"></span></td>
-                                                            <td><span class="zhibiao-color" style="background-color: #de4045;"></span></td>
-                                                            <td><span class="zhibiao-color" style="background-color: #a13f6f;"></span></td>
-                                                            <td><span class="zhibiao-color" style="background-color: #5c1a25;"></span></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><span class="zhibiao-title" style="width:50px">(0~35)</span></td>
-                                                            <td><span class="zhibiao-title" style="width:50px">(35↑)</span></td>
-                                                            <td><span class="zhibiao-title" style="width:50px">(75↑)</span></td>
-                                                            <td><span class="zhibiao-title" style="width:50px">(115↑)</span></td>
-                                                            <td><span class="zhibiao-title" style="width:50px">(150↑)</span></td>
-                                                            <td><span class="zhibiao-title" style="width:50px">(350↑)</span></td>
-                                                        </tr>
-                                                        <tr class="title">
-                                                            <td><span class="zhibiao-title">优</span></td>
-                                                            <td><span class="zhibiao-title">良</span></td>
-                                                            <td><span class="zhibiao-title">轻度污染</span></td>
-                                                            <td><span class="zhibiao-title">中度污染</span></td>
-                                                            <td><span class="zhibiao-title">重度污染</span></td>
-                                                            <td><span class="zhibiao-title">严重污染</span></td>
-                                                        </tr>
-                                                    </table>
-                                                </div>
-                                                <div style="border-top: 2px dashed"></div>
-                                            </div>
-                                        </td>
+                                    <tr>
+                                        <td>杭州</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.hz.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.hz.content :'')"></NumberGrows></td>
                                     </tr>
+                                    <tr>
+                                        <td>成都</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.cd.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cd.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>天津</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.tj.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.tj.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>苏州</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.szsz.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.szsz.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>南京</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.nj.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.nj.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>贵阳</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.gy.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.gy.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>长沙</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.cs.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cs.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>沈阳</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r['sy'].content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs['sy'].content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>济南</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.jn.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.jn.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>宁波</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.nb.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.nb.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>无锡</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.wx.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.wx.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>郴州</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.cz.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cz.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>大连</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.dl.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.dl.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>合肥</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.hf.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.hf.content :'')"></NumberGrows></td>
+                                    </tr>
+                                    </tbody>
                                 </table>
                             </td>
                         </tr>
@@ -282,31 +296,135 @@
 
 <script>
     import NumberGrow from '../components/numver'
+    import NumberGrows from '../components/numvers'
+    import echarts from 'echarts'
     import {
         P_GET_CONT,
-        P_GET_CONTS
+        P_GET_CONTS,
+        P_GET_ALL,
+        P_GET_ALLS
     } from '../config/api'
     export default {
         name: "index",
         components:{
-            NumberGrow
+            NumberGrow,
+            NumberGrows
     },
         data () {
             return {
                 data:'',
-                datas:''
+                datas:'',
+                data_r:'',
+                data_rs:'',
+                dataArrvue:[],
+                dataArrreact:[],
+                rotate: 90,
+                align: 'left',
+                verticalAlign: 'middle',
+                position: 'insideBottom',
+                distance: 15,
             }
         },
         computed:{
 
         },
         mounted() {
-            this.getdata()
-            setInterval(()=> {
-                this.getdata()
-            },5000)
+            this.getdata();
+            this.getdatas();
+
+            this.getdatar()
+            this.getdatars()
+
+            this.$nextTick(function() {
+                this.drawPie('main')
+            })
+
+            window.console.log(this.dataArrreact)
+            // window.console.log(this.data_rs)
         },
         methods:{
+            drawPie(id){
+                var labelOption = {
+                    normal: {
+                        show: true,
+                        position: this.position,
+                        distance: this.distance,
+                        align: this.align,
+                        verticalAlign: this.verticalAlign,
+                        rotate:this.rotate,
+                        formatter: '{c}  {name|{a}}',
+                        fontSize: 16,
+                        rich: {
+                            name: {
+                                textBorderColor: '#fff'
+                            }
+                        }
+                    }
+                };
+                this.charts = echarts.init(document.getElementById(id))
+                this.charts.setOption({
+                    color: ['#003366', '#006699', '#4cabce', '#e5323e'],
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        },
+                    },
+                    legend: {
+                        data: ['react.js', 'vue.js'],
+                        top:'20',
+                        textStyle: { //图例文字的样式
+                            color: '#fff',
+                            fontSize: 16,
+                        },
+                    },
+                    toolbox: {
+                        show: true,
+                        orient: 'vertical',
+                        left: 'right',
+                        top: 'center'
+
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            axisTick: {show: false},
+                            data: ['全国', '北京', '上海', '深圳', '广州'],
+                            axisLine:{
+                                lineStyle:{
+                                    color:'yellow',
+                                }
+                        },
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            axisLine:{
+                                lineStyle:{
+                                    color:'yellow',
+                                }
+                            },
+                        }
+                    ],
+                    series: [
+                        {
+                            name: 'react.js',
+                            type: 'bar',
+                            barGap: 0,
+                            label: labelOption,
+                            data: [320, 332, 301, 334, 390]
+                        },
+                        {
+                            name: 'vue.js',
+                            type: 'bar',
+                            label: labelOption,
+                            data: [220, 182, 191, 234, 290]
+                        }
+                    ]
+                })
+            },
             getdata(){
                 let postData = this.$qs.stringify({
                     requestName:"getdata",
@@ -314,11 +432,13 @@
                 this.$post(P_GET_CONT,postData).then(res => {
                     if(res.code==200){
                         this.data=res.data;
-                        window.console.log(this.data)
+                        this.dataArrreact.push(res.data);
+                        setTimeout(()=>{
+                            this.getdata()
+                        },2000)
                     }
 
                 });
-                this.getdatas()
             },
             getdatas(){
                 let postData = this.$qs.stringify({
@@ -327,15 +447,47 @@
                 this.$post(P_GET_CONTS,postData).then(res => {
                     if(res.code==200){
                         this.datas=res.data;
-                        window.console.log(this.datas)
+                        setTimeout(()=>{
+                            this.getdatas()
+                        },2000)
                     }
 
                 })
+            },
+            getdatar(){
+                let postData = this.$qs.stringify({
+                    requestName:"getdataall",
+                });
+                this.$post(P_GET_ALL,postData).then(res => {
+                    if(res.code==200){
+                        this.data_r=res.data;
+                        setTimeout(()=>{
+                            this.getdatar()
+                        },2000)
+                    }
+
+                });
+
+            },
+            getdatars(){
+                let postData = this.$qs.stringify({
+                    requestName:"getdataalls",
+                });
+                this.$post(P_GET_ALLS,postData).then(res => {
+                    if(res.code==200){
+                        this.data_rs=res.data;
+                        setTimeout(()=>{
+                            this.getdatars()
+                        },2000)
+                    }
+
+                });
             },
             strs(str){
                 let numArr = str ? str.match(/\d+/g) : '';
                 return numArr ?  +numArr.join('') : '0'
             }
+
         }
     }
 </script>
