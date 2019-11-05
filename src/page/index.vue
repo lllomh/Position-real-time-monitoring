@@ -8,7 +8,7 @@
                             <!--                <img src="./assets/images/10002.png" style="height: 85px" />-->
                         </div>
                         <div class="time" id="DataTime">
-<!--                            编程语言热度-->
+                           前端框架招聘热度
                         </div>
                     </div>
                 </td>
@@ -24,7 +24,32 @@
                                             <td style="vertical-align: top">
                                                 <div class="middle-box">
                                                     <div class="tmbg quxian">
-                                                        <div id="main" style="width:100%;height: 100%;"></div>
+                                                        <div id="main" style="width:100%;height: 100%;position: relative;">
+                                                            <div class="co" style="text-align: center;padding-top: 8px;">
+                                                                <span>react &nbsp;</span><span style="display: inline-block;background: #04ece2;width: 26px;height: 14px;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                                <span>vue &nbsp;</span><span style="display: inline-block;background: red;width: 26px;height: 14px;"></span>
+                                                            </div>
+                                                            <div class="sh g">
+                                                                <span class="text">上 海</span>
+                                                                <div class="qg react" :title="'react:'+strs(data ? data.sh.content :'')" :style="{height:strs(data ? data.sh.content :'')/50 +'%'}"></div>
+                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.sh.content :'')" :style="{height:strs(datas ? datas.sh.content :'')/50 +'%'}"></div>
+                                                            </div>
+                                                            <div class="bj g" style="left: 100px;">
+                                                                <span class="text">北 京</span>
+                                                                <div class="qg react" :title="'react:'+strs(data ? data.bj.content :'')" :style="{height:strs(data ? data.bj.content :'')/50 +'%'}"></div>
+                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.bj.content :'')" :style="{height:strs(datas ? datas.sh.content :'')/50 +'%'}"></div>
+                                                            </div>
+                                                            <div class="sz g" style="left: 200px;">
+                                                                <span class="text">深 圳</span>
+                                                                <div class="qg react" :title="'react:'+strs(data ? data.sz.content :'')" :style="{height:strs(data ? data.sz.content :'')/50 +'%'}"></div>
+                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.sz.content :'')" :style="{height:strs(datas ? datas.sh.content :'')/50 +'%'}"></div>
+                                                            </div>
+                                                            <div class="gz g " style="left: 300px;">
+                                                                <span class="text">广 州</span>
+                                                                <div class="qg react" :title="'react:'+strs(data ? data.gz.content :'')" :style="{height:strs(data ? data.gz.content :'')/50 +'%'}"></div>
+                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.gz.content :'')" :style="{height:strs(datas ? datas.gz.content :'')/50 +'%'}"></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -297,7 +322,6 @@
 <script>
     import NumberGrow from '../components/numver'
     import NumberGrows from '../components/numvers'
-    import echarts from 'echarts'
     import {
         P_GET_CONT,
         P_GET_CONTS,
@@ -324,132 +348,30 @@
                 verticalAlign: 'middle',
                 position: 'insideBottom',
                 distance: 15,
-                obgdata:{}
+                obgdata:{},
+                chartData: {
+                    xData: ['全国', '北京', '上海', '深圳', '广州'],
+                    sData: [5, 20, 36, 10, 10, 70]
+
+                },
             }
         },
         computed:{
 
         },
-        watch:{
-            dataArrreact: {
-                handler(newVal) {
-                    window.console.log("tag", newVal);
-                },
-            },
-            data(){
-              this.$nextTick(function() {
-                  this.drawPie('main')
-              })
-            },
-            datas(){
-                this.$nextTick(function() {
-                    this.drawPie('main')
-                })
-            }
-        },
         mounted() {
             this.getdata();
             this.getdatas();
 
-            this.getdatar()
-            this.getdatars()
+            this.getdatar();
+            this.getdatars();
 
 
-
+            window.console.log(this.chartData.sData)
             window.console.log(this.dataArrreact)
-            // window.console.log(this.data_rs)
         },
 
-        beforeDestroy() {
-            if (!this.charts) {
-                return;
-            }
-            this.charts.dispose();
-            this.charts = null;
-        },
             methods:{
-            drawPie(id){
-                var labelOption = {
-                    normal: {
-                        show: true,
-                        position: this.position,
-                        distance: this.distance,
-                        align: this.align,
-                        verticalAlign: this.verticalAlign,
-                        rotate:this.rotate,
-                        formatter: '{c}  {name|{a}}',
-                        fontSize: 16,
-                        rich: {
-                            name: {
-                                textBorderColor: '#fff'
-                            }
-                        }
-                    }
-                };
-                this.charts = echarts.init(document.getElementById(id))
-                this.charts.setOption({
-                    color: ['#003366', '#006699', '#4cabce', '#e5323e'],
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        },
-                    },
-                    legend: {
-                        data: ['react.js', 'vue.js'],
-                        top:'20',
-                        textStyle: { //图例文字的样式
-                            color: '#fff',
-                            fontSize: 16,
-                        },
-                    },
-                    toolbox: {
-                        show: true,
-                        orient: 'vertical',
-                        left: 'right',
-                        top: 'center'
-
-                    },
-                    calculable: true,
-                    xAxis: [
-                        {
-                            type: 'category',
-                            axisTick: {show: false},
-                            data: ['全国', '北京', '上海', '深圳', '广州'],
-                            axisLine:{
-                                lineStyle:{
-                                    color:'yellow',
-                                }
-                        },
-                        }
-                    ],
-                    yAxis: [
-                        {
-                            type: 'value',
-                            axisLine:{
-                                lineStyle:{
-                                    color:'yellow',
-                                }
-                            },
-                        }
-                    ],
-                    series: [
-                        {
-                            name: 'react.js',
-                            type: 'bar',
-                            barGap: 0,
-                            label: labelOption,
-                            data: this.dataArrreact
-                        },
-                        {
-                            name: 'vue.js',
-                            type: 'bar',
-                            label: labelOption,
-                            data: this.dataArrvue
-                        }
-                    ]
-                })
-            },
             getdata(){
                 let postData = this.$qs.stringify({
                     requestName:"getdata",
@@ -468,6 +390,7 @@
                         for (let i in obgdata) {
                             this.dataArrreact.push(obgdata[i]); //值
                         }
+
                         setTimeout(()=>{
                             this.dataArrreact=[]
                             this.getdata()
@@ -533,7 +456,7 @@
             strs(str){
                 let numArr = str ? str.match(/\d+/g) : '';
                 return numArr ?  +numArr.join('') : '0'
-            }
+            },
 
         }
     }

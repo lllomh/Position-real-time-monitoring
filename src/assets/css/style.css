@@ -29,3 +29,18 @@ table.tablisty th,table.tablisty td{
 }
 .footer{clear: both; padding-left: 2%;}
 .footer .title{font-weight: bold; font-size: 20px;}
+#main .g .text{
+    position: absolute;bottom: 0;width: 57px;
+}
+#main .g .react{
+    background: #04ece2;height: 81%;position: absolute;bottom: 36px;width: 17px;left: 59px;
+}
+#main .g .vue{
+    background: red;height: 81%;position: absolute;bottom: 36px;width: 17px;left: 79px;
+}
+#main .g{
+    position: absolute;bottom: 7px;height: 100%;padding-left: 50px;
+}
+#main .qg{
+    transition: all ease 0.9s 0s;
+}
