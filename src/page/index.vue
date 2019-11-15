@@ -37,12 +37,12 @@
                                                             <div class="bj g" style="left: 100px;">
                                                                 <span class="text">北 京</span>
                                                                 <div class="qg react" :title="'react:'+strs(data ? data.bj.content :'')" :style="{height:strs(data ? data.bj.content :'')/50 +'%'}"></div>
-                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.bj.content :'')" :style="{height:strs(datas ? datas.sh.content :'')/50 +'%'}"></div>
+                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.bj.content :'')" :style="{height:strs(datas ? datas.bj.content :'')/50 +'%'}"></div>
                                                             </div>
                                                             <div class="sz g" style="left: 200px;">
                                                                 <span class="text">深 圳</span>
                                                                 <div class="qg react" :title="'react:'+strs(data ? data.sz.content :'')" :style="{height:strs(data ? data.sz.content :'')/50 +'%'}"></div>
-                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.sz.content :'')" :style="{height:strs(datas ? datas.sh.content :'')/50 +'%'}"></div>
+                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.sz.content :'')" :style="{height:strs(datas ? datas.sz.content :'')/50 +'%'}"></div>
                                                             </div>
                                                             <div class="gz g " style="left: 300px;">
                                                                 <span class="text">广 州</span>
@@ -208,7 +208,7 @@
                                     </table>
                                 </div>
                             </td>
-                            <td style="width: 30%; min-width: 240px; top: 0; right: 0; position: relative; vertical-align: top;">
+                            <td style="width: 30%; min-width: 240px; top: 0; right: 0; position: relative; vertical-align: top;" class="hix">
                                 <table class="tablisty">
                                     <thead>
                                        <tr>
@@ -462,6 +462,13 @@
     }
 </script>
 
-<style scoped>
-
+<style>
+    @media (max-width: 767px) {
+        .hix{
+            display: none;
+        }
+        #59053893-box{
+            padding-right: 2%;
+        }
+    }
 </style>

@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-let proxyHost = "http://api.lllomh.cn/index.php";
+let proxyHost = "http://api.lllomh.cn/";
 // let proxyHost = "http://192.168.1.145";
 // let proxyHost = "http://192.168.1.51";
 // let proxyHost = "http://www.api.com";
