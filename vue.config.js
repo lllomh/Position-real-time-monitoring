@@ -1,10 +1,11 @@
 const webpack = require('webpack');
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-let proxyHost = "http://api.lllomh.cn/";
+// let proxyHost = "http://api.lllomh.com/";
 // let proxyHost = "http://192.168.1.145";
 // let proxyHost = "http://192.168.1.51";
-// let proxyHost = "http://www.api.com";
+let proxyHost = "http://www.api.com";
 // let proxyHost = "http://e23004507c.imwork.net";
 module.exports = {
     devServer: {
@@ -38,8 +39,16 @@ module.exports = {
                       threshold: 10240,
                       minRatio: 0.8,
                   }),
-                  new UglifyJSPlugin({
-                      cache:true
+                  // new UglifyJSPlugin({
+                  //     cache:true
+                  // })
+                  new ParallelUglifyPlugin({
+                      cacheDir: '.cache/',
+                      uglifyJS: {
+                          output: {
+                              comments: false
+                          }
+                      }
                   })
               ]
           }

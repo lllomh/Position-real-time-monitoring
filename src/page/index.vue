@@ -24,32 +24,19 @@
                                             <td style="vertical-align: top">
                                                 <div class="middle-box">
                                                     <div class="tmbg quxian">
-                                                        <div id="main" style="width:100%;height: 100%;position: relative;">
-                                                            <div class="co" style="text-align: center;padding-top: 8px;">
-                                                                <span>react &nbsp;</span><span style="display: inline-block;background: #04ece2;width: 26px;height: 14px;"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                                <span>vue &nbsp;</span><span style="display: inline-block;background: red;width: 26px;height: 14px;"></span>
-                                                            </div>
-                                                            <div class="sh g">
-                                                                <span class="text">上 海</span>
-                                                                <div class="qg react" :title="'react:'+strs(data ? data.sh.content :'')" :style="{height:strs(data ? data.sh.content :'')/50 +'%'}"></div>
-                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.sh.content :'')" :style="{height:strs(datas ? datas.sh.content :'')/50 +'%'}"></div>
-                                                            </div>
-                                                            <div class="bj g" style="left: 100px;">
-                                                                <span class="text">北 京</span>
-                                                                <div class="qg react" :title="'react:'+strs(data ? data.bj.content :'')" :style="{height:strs(data ? data.bj.content :'')/50 +'%'}"></div>
-                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.bj.content :'')" :style="{height:strs(datas ? datas.bj.content :'')/50 +'%'}"></div>
-                                                            </div>
-                                                            <div class="sz g" style="left: 200px;">
-                                                                <span class="text">深 圳</span>
-                                                                <div class="qg react" :title="'react:'+strs(data ? data.sz.content :'')" :style="{height:strs(data ? data.sz.content :'')/50 +'%'}"></div>
-                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.sz.content :'')" :style="{height:strs(datas ? datas.sz.content :'')/50 +'%'}"></div>
-                                                            </div>
-                                                            <div class="gz g " style="left: 300px;">
-                                                                <span class="text">广 州</span>
-                                                                <div class="qg react" :title="'react:'+strs(data ? data.gz.content :'')" :style="{height:strs(data ? data.gz.content :'')/50 +'%'}"></div>
-                                                                <div class="qg vue" :title="'vue:'+strs(datas ? datas.gz.content :'')" :style="{height:strs(datas ? datas.gz.content :'')/50 +'%'}"></div>
-                                                            </div>
+                                                        <div class="btns btm1" :class="{acitve:isacitve0}">
+                                                            <button @click="getCrtyData(0)">上海</button>
                                                         </div>
+                                                        <div class="btns btm2" :class="{acitve:isacitve1}" style="">
+                                                            <button @click="getCrtyData(1)">北京</button>
+                                                        </div>
+                                                        <div class="btns btm3" :class="{acitve:isacitve2}" style="">
+                                                            <button @click="getCrtyData(2)">深圳</button>
+                                                        </div>
+                                                        <div class="btns btm4" :class="{acitve:isacitve3}" style="">
+                                                            <button @click="getCrtyData(3)">广州</button>
+                                                        </div>
+                                                        <div id="main" style="width: 100%;height: 100%"></div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -63,10 +50,10 @@
                                                                 <span class="title" id="59053895-PM10-title">城市/实时职位数</span>
                                                             </div>
                                                             <div class="value" id="59053893-PM15-value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">react上一次变动前数量</div>
                                                             <div class="value" id="59053893-PM1585txt">react</div>
                                                             <div class="value" id="59053893-PM5-value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">vue上一次变动前数量</div>
                                                             <div class="value" id="59053893-PM55txt">vue</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
@@ -75,11 +62,11 @@
                                                                 <span class="title" id="59053893-PM10-title">全国</span>
                                                             </div>
                                                             <div class="value" id="59053893-PM10-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span style="color: #ffe5ad">{{ga_oldval}}</span></div>
                                                             <div class="value" id="59053893-PM34ww0txt"><NumberGrow :value="strs(data ? data.ga.content :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{ga_oldval_v}}</span>   </div>
                                                             <div class="value"><NumberGrow :value="strs(datas ? datas.ga.content :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
@@ -88,11 +75,11 @@
                                                                 <span class="title" id="59053893-HUMI-title">上海</span>
                                                             </div>
                                                             <div class="value" id="59053893-HUMI-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span style="color: #ffe5ad">{{sh_oldval}}</span></div>
                                                             <div class="value" id="59053893-HUMItxt"><NumberGrow :value="strs(data ? data.sh.content :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{sh_oldval_v}}</span>   </div>
                                                             <div class="value"><NumberGrow :value="strs(datas ? datas.sh.content :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
@@ -101,11 +88,11 @@
                                                                 <span class="title" id="59053893-TEMP-title">北京</span>
                                                             </div>
                                                             <div class="value" id="59053893-TEMP-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{bj_oldval}}</span> </div>
                                                             <div class="value" id="59053893-TEMPtxt"><NumberGrow :value="strs(data ? data.bj.content :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{bj_oldval_v}}</span>   </div>
                                                             <div class="value"><NumberGrow :value="strs(datas ? datas.bj.content :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
@@ -114,11 +101,11 @@
                                                                 <span class="title" id="59053893-CO2-title">深圳</span>
                                                             </div>
                                                             <div class="value" id="59053893-CO2-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{sz_oldval}}</span> </div>
                                                             <div class="value"  id="59053893-CO2txt"><NumberGrow :value="strs(data ? data.sz.content :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{sz_oldval_v}}</span>   </div>
                                                             <div class="value"><NumberGrow :value="strs(datas ? datas.sz.content :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
@@ -127,11 +114,11 @@
                                                                 <span class="title" id="59053893-VOC-title">广州</span>
                                                             </div>
                                                             <div class="value" id="59053893-VOC-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{gz_oldval}}</span> </div>
                                                             <div class="value" id="59053893-VOCtxt"><NumberGrow :value="strs(data ? data.gz.content :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0"> </div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{gz_oldval_v}}</span>  </div>
                                                             <div class="value"><NumberGrow :value="strs(datas ? datas.gz.content :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
@@ -322,11 +309,13 @@
 <script>
     import NumberGrow from '../components/numver'
     import NumberGrows from '../components/numvers'
+    import echarts from 'echarts'
     import {
         P_GET_CONT,
         P_GET_CONTS,
         P_GET_ALL,
-        P_GET_ALLS
+        P_GET_ALLS,
+        P_GET_DATALIST
     } from '../config/api'
     export default {
         name: "index",
@@ -337,12 +326,46 @@
         data () {
             return {
                 data:'',
-                charts:null,
                 datas:'',
                 data_r:'',
                 data_rs:'',
                 dataArrvue:[],
                 dataArrreact:[],
+                timeDtae:[],
+                vueData:[],
+                reactData:[],
+                sh_vue_data:[],
+                sh_react_data:[],
+                bj_vue_data:[],
+                bj_react_data:[],
+                sz_vue_data:[],
+                sz_react_data:[],
+                gz_vue_data:[],
+                gz_react_data:[],
+                ga_old:'',
+                sh_old:'',
+                bj_old:'',
+                sz_old:'',
+                gz_old:'',
+                ga_oldval:'',
+                sh_oldval:'',
+                bj_oldval:'',
+                sz_oldval:'',
+                gz_oldval:'',
+                ga_old_v:'',
+                sh_old_v:'',
+                bj_old_v:'',
+                sz_old_v:'',
+                gz_old_v:'',
+                ga_oldval_v:'',
+                sh_oldval_v:'',
+                bj_oldval_v:'',
+                sz_oldval_v:'',
+                gz_oldval_v:'',
+                isacitve0:true,
+                isacitve1:false,
+                isacitve2:false,
+                isacitve3:false,
                 rotate: 90,
                 align: 'left',
                 verticalAlign: 'middle',
@@ -354,9 +377,79 @@
                     sData: [5, 20, 36, 10, 10, 70]
 
                 },
+                charts: '',
+                opinion:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'],
+                opinionData:[
+                    {value:335, name:'直接访问'},
+                    {value:310, name:'邮件营销'},
+                    {value:234, name:'联盟广告'},
+                    {value:135, name:'视频广告'},
+                    {value:1548, name:'搜索引擎'}
+                ]
             }
         },
         computed:{
+
+        },
+        watch: {
+            timeDtae() {
+                this.$nextTick(function () {
+                    this.drawPie('main')
+                })
+            },
+            // react start
+            ga_old: {
+                handler: function (val, oldval) {
+                    this.ga_oldval = oldval ? oldval : '未变动'
+                },
+            },
+            sh_old: {
+                handler: function (val, oldval) {
+                    this.sh_oldval = oldval ? oldval : '未变动'
+                },
+            },
+            bj_old: {
+                handler: function (val, oldval) {
+                    this.bj_oldval = oldval ? oldval : '未变动'
+                },
+            },
+            sz_old: {
+                handler: function (val, oldval) {
+                    this.sz_oldval = oldval ? oldval : '未变动'
+                },
+            },
+            gz_old: {
+                handler: function (val, oldval) {
+                    this.gz_oldval = oldval ? oldval : '未变动'
+                },
+            },
+            //vue setart
+            ga_old_v: {
+                handler: function (val, oldval) {
+                    this.ga_oldval_v = oldval ? oldval : '未变动'
+                },
+            },
+            sh_old_v: {
+                handler: function (val, oldval) {
+                    this.sh_oldval_v = oldval ? oldval : '未变动'
+                },
+            },
+            bj_old_v: {
+                handler: function (val, oldval) {
+                    this.bj_oldval_v = oldval ? oldval : '未变动'
+                },
+            },
+            sz_old_v: {
+                handler: function (val, oldval) {
+                    this.sz_oldval_v = oldval ? oldval : '未变动'
+                },
+            },
+            gz_old_v: {
+                handler: function (val, oldval) {
+                    this.gz_oldval_v = oldval ? oldval : '未变动'
+                },
+            },
+
 
         },
         mounted() {
@@ -365,13 +458,229 @@
 
             this.getdatar();
             this.getdatars();
+            this.getListDates();
 
+            this.$nextTick(function() {
+                this.drawPie('main')
+            })
+
+            window.addEventListener("resize",()=>{
+                    this.charts.resize();
+            })
 
             window.console.log(this.chartData.sData)
             window.console.log(this.dataArrreact)
         },
 
             methods:{
+                drawPie(id){
+                    this.charts = echarts.init(document.getElementById(id))
+                    this.charts.setOption({
+                            grid:{
+                                x:65,
+                                y:55,
+                                x2:40,
+                                y2:40,
+
+                            },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        legend: {
+                            padding:[15,0,0,0],
+                            data: ['react', 'vue'],
+                            textStyle:{
+                                fontSize:'18',
+                                color: '#ffffff'//字体颜色
+                            },
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data:this.timeDtae,
+                                axisPointer: {
+                                    type: 'shadow'
+                                },
+                                axisLabel: {
+                                    show: true,
+                                    textStyle: {
+                                        color: '#ffffff'
+                                    }
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '职位数',
+                                nameTextStyle: {
+                                    color: '#ffffff'
+                                },
+                                min: 0,
+                                // max: 5000,
+                                // interval: 50,
+                                axisLabel: {
+                                    formatter: '{value} 个',
+                                    show: true,
+                                    textStyle: {
+                                        color: '#ffffff'
+                                    }
+                                }
+                            },
+                        ],
+                        series: [
+                            {
+                                name: 'react',
+                                type: 'bar',
+                                data: this.reactData,
+                                itemStyle: {
+                                    normal: {
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: 'red',
+                                                fontSize: 16
+                                                }
+                                            }
+                                          }
+                                    },
+                            },
+                            {
+                                name: 'vue',
+                                type: 'bar',
+                                data: this.vueData,
+                                itemStyle: {
+                                    normal: {
+                                        label: {
+                                            show: true, //开启显示
+                                            position: 'top', //在上方显示
+                                            textStyle: { //数值样式
+                                                color: '#2f4554',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    }
+                                },
+                            },
+                        ]
+                    })
+                },
+            getListDates(){
+                let postData = this.$qs.stringify({
+                    requestName:"getdatalists",
+                });
+                this.$post(P_GET_DATALIST,postData).then(res => {
+                    if(res.code==200){
+                       let datas = res.data ? res.data :'';
+                       this.listDates = datas;
+
+                        if(datas){
+                            let day_date = [];
+
+                            let sh_vue_data = [];
+                            let sh_react_data = [];
+
+                            let bj_vue_data = [];
+                            let bj_react_data = [];
+
+                            let sz_vue_data = [];
+                            let sz_react_data = [];
+
+                            let gz_vue_data = [];
+                            let gz_react_data = [];
+                            for(let i=0;i<datas.length;i++){
+                                day_date.push(datas[i].ceate_time)
+
+                                sh_vue_data.push(this.tasterNumber(((JSON.parse(datas[i].vue)).sh.content)))
+                                sh_react_data.push(this.tasterNumber(((JSON.parse(datas[i].react)).sh.content)))
+
+                                bj_vue_data.push(this.tasterNumber(((JSON.parse(datas[i].vue)).bj.content)))
+                                bj_react_data.push(this.tasterNumber(((JSON.parse(datas[i].react)).bj.content)))
+
+                                sz_vue_data.push(this.tasterNumber(((JSON.parse(datas[i].vue)).sz.content)))
+                                sz_react_data.push(this.tasterNumber(((JSON.parse(datas[i].react)).sz.content)))
+
+                                gz_vue_data.push(this.tasterNumber(((JSON.parse(datas[i].vue)).gz.content)))
+                                gz_react_data.push(this.tasterNumber(((JSON.parse(datas[i].react)).gz.content)))
+
+
+                            }
+                            window.console.log()
+                            this.timeDtae = day_date;
+                            this.vueData = sh_vue_data;
+                            this.reactData = sh_react_data;
+
+                            this.sh_vue_data= sh_vue_data;
+                            this.sh_react_data=sh_react_data;
+
+                            this.bj_vue_data= bj_vue_data;
+                            this.bj_react_data=bj_react_data;
+
+                            this.sz_vue_data= sz_vue_data;
+                            this.sz_react_data=sz_react_data;
+
+                            this.gz_vue_data= gz_vue_data;
+                            this.gz_react_data=gz_react_data;
+                        }
+
+
+                    }
+
+                });
+            },
+             getCrtyData(id){
+                    if(id==0){
+                        this.isacitve0=true;
+                        this.isacitve1=false;
+                        this.isacitve2=false;
+                        this.isacitve3=false;
+                        this.vueData = this.sh_vue_data;
+                        this.reactData = this.sh_react_data;
+                        this.$nextTick(function() {
+                            this.drawPie('main')
+                        })
+                    }
+                    if(id==1){
+                        this.isacitve0=false;
+                        this.isacitve1=true;
+                        this.isacitve2=false;
+                        this.isacitve3=false;
+                        this.vueData = this.bj_vue_data;
+                        this.reactData = this.bj_react_data;
+                        this.$nextTick(function() {
+                            this.drawPie('main')
+                        })
+                    }
+                     if(id==2){
+                         this.isacitve0=false;
+                         this.isacitve1=false;
+                         this.isacitve2=true;
+                         this.isacitve3=false;
+                         this.vueData = this.sz_vue_data;
+                         this.reactData = this.sz_react_data;
+                         this.$nextTick(function() {
+                             this.drawPie('main')
+                         })
+                     }
+                     if(id==3){
+                         this.isacitve0=false;
+                         this.isacitve1=false;
+                         this.isacitve2=false;
+                         this.isacitve3=true;
+                         this.vueData = this.gz_vue_data;
+                         this.reactData = this.gz_react_data;
+                         this.$nextTick(function() {
+                             this.drawPie('main')
+                         })
+                     }
+             },
             getdata(){
                 let postData = this.$qs.stringify({
                     requestName:"getdata",
@@ -387,6 +696,12 @@
                           obgdata.sz= this.strs(res.data? res.data.sz.content:'');
                           obgdata.gz= this.strs(res.data? res.data.gz.content:'');
 
+                          this.ga_old = obgdata.ga;
+                          this.sh_old = obgdata.sh;
+                          this.bj_old = obgdata.bj;
+                          this.sz_old = obgdata.sz;
+                          this.gz_old = obgdata.gz;
+
                         for (let i in obgdata) {
                             this.dataArrreact.push(obgdata[i]); //值
                         }
@@ -394,7 +709,7 @@
                         setTimeout(()=>{
                             this.dataArrreact=[]
                             this.getdata()
-                        },2000)
+                        },5000)
                     }
 
                 });
@@ -413,13 +728,19 @@
                         obgdata.sz= this.strs(res.data? res.data.sz.content:'');
                         obgdata.gz= this.strs(res.data? res.data.gz.content:'');
 
+                        this.ga_old_v = obgdata.ga;
+                        this.sh_old_v = obgdata.sh;
+                        this.bj_old_v = obgdata.bj;
+                        this.sz_old_v = obgdata.sz;
+                        this.gz_old_v = obgdata.gz;
+
                         for (let i in obgdata) {
                             this.dataArrvue.push(obgdata[i]); //值
                         }
                         setTimeout(()=>{
                             this.dataArrvue=[]
                             this.getdatas()
-                        },2000)
+                        },5000)
                     }
 
                 })
@@ -433,7 +754,7 @@
                         this.data_r=res.data;
                         setTimeout(()=>{
                             this.getdatar()
-                        },2000)
+                        },5000)
                     }
 
                 });
@@ -448,7 +769,7 @@
                         this.data_rs=res.data;
                         setTimeout(()=>{
                             this.getdatars()
-                        },2000)
+                        },5000)
                     }
 
                 });
@@ -457,6 +778,9 @@
                 let numArr = str ? str.match(/\d+/g) : '';
                 return numArr ?  +numArr.join('') : '0'
             },
+             tasterNumber(str){
+                 return str.replace(/[^0-9]/ig,"");
+             }
 
         }
     }

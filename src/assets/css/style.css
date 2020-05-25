@@ -11,8 +11,10 @@ table{width: 100%;height: 100%;}
 .head-top .time{text-align:center}
 .tmbg{background: url('../images/bg-tm.png');width: 100%; height: 100%}
 .middle-box{height: 95%; width: 100%;}
-.middle-box .quxian{border-radius: 15px; min-height: 200px;}
-
+.middle-box .quxian{border-radius: 15px; min-height: 200px;position: relative}
+.middle-box .quxian .btns{z-index: 999;}
+.middle-box .quxian button{cursor: pointer}
+.middle-box .quxian .acitve button{background: #e2e2e2;color: #ffaf00;}
 .item-box{width: 98%; overflow: hidden; position: relative; height: 100%; padding: 5px;}
 .item-box .item{float: left;border-radius: 15px;margin: 0 15px 0px 0; width: 195px; height: 130px;}
 .item-box .item .info{padding: 19px 0;text-align: center;}
@@ -45,3 +47,27 @@ table.tablisty th,table.tablisty td{
     transition: all ease 0.9s 0s;
 }
 
+.colors{
+    color: #ffe5ad
+}
+.btm1 {
+    position: absolute;
+    font-size: 15px;
+    right: 190px;
+    top: 12px;
+}
+.btm1 {
+    position: absolute;
+    font-size: 15px;
+    right: 190px;
+    top: 12px;
+}
+.btm2 {
+    position: absolute; font-size: 15px;right: 140px;top: 12px;
+}
+.btm3 {
+    position: absolute; font-size: 15px;right: 90px;top: 12px;
+}
+.btm4 {
+    position: absolute; font-size: 15px;right: 40px;top: 12px;
+}
