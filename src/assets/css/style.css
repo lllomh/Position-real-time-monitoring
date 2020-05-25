@@ -56,12 +56,6 @@ table.tablisty th,table.tablisty td{
     right: 190px;
     top: 12px;
 }
-.btm1 {
-    position: absolute;
-    font-size: 15px;
-    right: 190px;
-    top: 12px;
-}
 .btm2 {
     position: absolute; font-size: 15px;right: 140px;top: 12px;
 }
@@ -70,4 +64,16 @@ table.tablisty th,table.tablisty td{
 }
 .btm4 {
     position: absolute; font-size: 15px;right: 40px;top: 12px;
+}
+
+@-moz-document url-prefix() {
+    .btm1 {
+        right: 205px;
+    }
+    .btm3{
+        right: 95px;
+    }
+    .btm2{
+        right: 150px;
+    }
 }
