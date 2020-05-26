@@ -4,8 +4,18 @@
             <tr style="height: 15%">
                 <td>
                     <div class="head-top">
+                        <vue-baberrage
+                                :isShow= "barrageIsShow"
+                                :barrageList = "barrageList"
+                                :loop = "barrageLoop"
+                                :boxHeight="boxHeight"
+                        >
+                        </vue-baberrage>
                         <div class="logo">
-                            <!--                <img src="./assets/images/10002.png" style="height: 85px" />-->
+                         <button class="btns tc" @click="toadd()"><span><i>我</i><i>要</i><i>吐</i><i>槽</i></span></button>
+                          <div class="textsub" :class="{rotation:isac}">
+                              <input type="text" v-model="msg" autofocus maxlength="12" ref="input" @keyup.enter="addToList"/>
+                          </div>
                         </div>
                         <div class="time" id="DataTime">
                            前端框架招聘热度
@@ -307,6 +317,7 @@
 </template>
 
 <script>
+    import { vueBaberrage,MESSAGE_TYPE } from 'vue-baberrage'
     import NumberGrow from '../components/numver'
     import NumberGrows from '../components/numvers'
     import echarts from 'echarts'
@@ -321,7 +332,8 @@
         name: "index",
         components:{
             NumberGrow,
-            NumberGrows
+            NumberGrows,
+            vueBaberrage
     },
         data () {
             return {
@@ -372,20 +384,15 @@
                 position: 'insideBottom',
                 distance: 15,
                 obgdata:{},
-                chartData: {
-                    xData: ['全国', '北京', '上海', '深圳', '广州'],
-                    sData: [5, 20, 36, 10, 10, 70]
-
-                },
                 charts: '',
-                opinion:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎'],
-                opinionData:[
-                    {value:335, name:'直接访问'},
-                    {value:310, name:'邮件营销'},
-                    {value:234, name:'联盟广告'},
-                    {value:135, name:'视频广告'},
-                    {value:1548, name:'搜索引擎'}
-                ]
+                isac:false,
+                msg: '',
+                barrageIsShow: true,
+                currentId : 0,
+                barrageLoop: false,
+                boxHeight:100,
+                hoverLanePause:true,
+                barrageList: [{id:1,  avatar: "/00.png", msg: '不错,挺有意义',time: 10,  type: MESSAGE_TYPE.NORMAL},{id:2,  avatar: "/00.png", msg: '数据准确么?',time: 9,  type: MESSAGE_TYPE.NORMAL}]
             }
         },
         computed:{
@@ -453,6 +460,7 @@
 
         },
         mounted() {
+            this.starty();
             this.getdata();
             this.getdatas();
 
@@ -468,11 +476,29 @@
                     this.charts.resize();
             })
 
-            window.console.log(this.chartData.sData)
-            window.console.log(this.dataArrreact)
         },
 
             methods:{
+            starty(){
+                this.barrageList.push({
+                    id: ++this.currentId,
+                    avatar: "/00.png",
+                    msg: '配色不错',
+                    time: 8,
+                    type: MESSAGE_TYPE.NORMAL,
+                });
+            },
+                addToList() {
+                    this.barrageList.push({
+                        id: ++this.currentId,
+                        avatar: "/00.png",
+                        msg: this.msg,
+                        time: 8,
+                        type: MESSAGE_TYPE.NORMAL,
+                    });
+                    this.toadd();
+                    this.msg=''
+                },
                 drawPie(id){
                     this.charts = echarts.init(document.getElementById(id))
                     this.charts.setOption({
@@ -688,7 +714,6 @@
                 this.$post(P_GET_CONT,postData).then(res => {
                     if(res.code==200){
                         this.data=res.data;
-                        window.console.log(res.data);
                         let obgdata = {};
                           obgdata.ga= this.strs(res.data? res.data.ga.content :'');
                           obgdata.sh= this.strs(res.data? res.data.sh.content:'');
@@ -773,6 +798,18 @@
                     }
 
                 });
+            },
+            toadd(){
+
+                if(this.isac){
+                    this.isac = false
+                }else {
+                    this.$refs.input.focus();
+                    this.isac = true;
+                }
+
+
+
             },
             strs(str){
                 let numArr = str ? str.match(/\d+/g) : '';
