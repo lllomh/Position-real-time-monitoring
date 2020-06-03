@@ -46,7 +46,7 @@ module.exports = {
     configureWebpack: config=>{
         return {
             plugins: [new webpack.BannerPlugin({
-                banner: "hash:[hash],chunkhash:[chunkhash],filename:[name],author:'芈渡/lllomh',E-mail:'henry_g@qq.com',time:" + (new Date()).format("yyyy-MM-dd hh:mm:ss")
+                banner: "hash:[hash],chunkhash:[chunkhash],filename:[name],author:'芈渡/lllomh',E-mail:'lllomh@qq.com',time:" + (new Date()).format("yyyy-MM-dd hh:mm:ss")
             }),
                 new CompressionWebpackPlugin({
                     filename: '[path].gz[query]',
