@@ -163,20 +163,24 @@ table.tablisty th,table.tablisty td{
     position: relative;
     z-index: 78;
     top: -35px;
-    transition: transform 0.8s  ;
+    transition: transform ease 0.8s;
 
 }
-.head-top .textsub input{
-    width: 117px;
-    height: 32px;
-    line-height: 32px;
+.head-top .textsub a{
+    display: block;
+    width: 115px;
+    height: 30px;
+    line-height: 30px;
     margin-top: 3px;
     outline: none;
     border-radius: 24px;
-    border: none;
     padding-left: 3px;
     margin-left: 1px;
     font-size: 15px;
+    text-align: center;
+    color: #fff;
+    text-decoration: none;
+    border: solid 1px #fff;
 }
 
 .rotation {

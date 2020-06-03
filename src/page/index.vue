@@ -4,17 +4,10 @@
             <tr style="height: 15%">
                 <td>
                     <div class="head-top">
-                        <vue-baberrage
-                                :isShow= "barrageIsShow"
-                                :barrageList = "barrageList"
-                                :loop = "barrageLoop"
-                                :boxHeight="boxHeight"
-                        >
-                        </vue-baberrage>
                         <div class="logo">
                          <button class="btns tc" @click="toadd()"><span><i>我</i><i>要</i><i>吐</i><i>槽</i></span></button>
                           <div class="textsub" :class="{rotation:isac}">
-                              <input type="text" v-model="msg" autofocus maxlength="12" ref="input" @keyup.enter="addToList"/>
+                              <a href="https://jq.qq.com/?_wv=1027&k=X8EDebNq" target="_blank" @keyup.enter="addToList">点我加群</a>
                           </div>
                         </div>
                         <div class="time" id="DataTime">
@@ -317,7 +310,6 @@
 </template>
 
 <script>
-    import { vueBaberrage,MESSAGE_TYPE } from 'vue-baberrage'
     import NumberGrow from '../components/numver'
     import NumberGrows from '../components/numvers'
     import echarts from 'echarts'
@@ -333,7 +325,6 @@
         components:{
             NumberGrow,
             NumberGrows,
-            vueBaberrage
     },
         data () {
             return {
@@ -386,13 +377,6 @@
                 obgdata:{},
                 charts: '',
                 isac:false,
-                msg: '',
-                barrageIsShow: true,
-                currentId : 0,
-                barrageLoop: false,
-                boxHeight:100,
-                hoverLanePause:true,
-                barrageList: [{id:1,  avatar: "/00.png", msg: '不错,挺有意义',time: 10,  type: MESSAGE_TYPE.NORMAL},{id:2,  avatar: "/00.png", msg: '数据准确么?',time: 9,  type: MESSAGE_TYPE.NORMAL}]
             }
         },
         computed:{
@@ -460,7 +444,6 @@
 
         },
         mounted() {
-            this.starty();
             this.getdata();
             this.getdatas();
 
@@ -479,25 +462,8 @@
         },
 
             methods:{
-            starty(){
-                this.barrageList.push({
-                    id: ++this.currentId,
-                    avatar: "/00.png",
-                    msg: '配色不错',
-                    time: 8,
-                    type: MESSAGE_TYPE.NORMAL,
-                });
-            },
                 addToList() {
-                    this.barrageList.push({
-                        id: ++this.currentId,
-                        avatar: "/00.png",
-                        msg: this.msg,
-                        time: 8,
-                        type: MESSAGE_TYPE.NORMAL,
-                    });
                     this.toadd();
-                    this.msg=''
                 },
                 drawPie(id){
                     this.charts = echarts.init(document.getElementById(id))
@@ -517,6 +483,26 @@
                                     color: '#999'
                                 }
                             }
+                        },
+                        toolbox: {
+                            itemSize:16,
+                            feature: {
+                                magicType: {
+                                    show: true, type: ['line', 'bar'],
+                                    iconStyle:{
+                                        color:'#fff',
+                                        borderColor:'#fff'
+                                    },
+                                    emphasis:{
+                                        iconStyle:{
+                                            color:'#81ff04',
+                                            borderColor:'#81ff04'
+                                        }
+                                    }
+                                }
+                            },
+                            top:10,
+                            left:130
                         },
                         legend: {
                             padding:[15,0,0,0],
@@ -559,6 +545,23 @@
                                     }
                                 }
                             },
+                        ],
+                        dataZoom: [
+                            {
+                                type: 'inside',
+                                start: 0,//初始化显示多少 百分之0 到 百分之100
+                                end: 100//初始化显示多少 百分之0 到 百分之100
+                            },
+                            {
+                                show: true,
+                                textStyle:{
+                                    color:'#81ff04',
+                                },
+                                type: 'slider',
+                                top: '90%',
+                                start: 0,//初始化显示多少 百分之0 到 百分之100
+                                end: 100//初始化显示多少 百分之0 到 百分之100
+                            }
                         ],
                         series: [
                             {
@@ -804,7 +807,6 @@
                 if(this.isac){
                     this.isac = false
                 }else {
-                    this.$refs.input.focus();
                     this.isac = true;
                 }
 
