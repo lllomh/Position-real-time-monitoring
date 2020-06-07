@@ -534,7 +534,7 @@
                                 nameTextStyle: {
                                     color: '#ffffff'
                                 },
-                                min: 0,
+                                min: 100,
                                 // max: 5000,
                                 // interval: 50,
                                 axisLabel: {
