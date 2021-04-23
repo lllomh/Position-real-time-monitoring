@@ -11,8 +11,9 @@
                           </div>
                         </div>
                         <div class="time" id="DataTime">
-                           前端框架招聘热度
+                           前端框架实时招聘热度
                         </div>
+                        <div class="titles">数据来源: 各大主流招聘平台</div>
                     </div>
                 </td>
             </tr>
@@ -66,11 +67,11 @@
                                                             </div>
                                                             <div class="value" id="59053893-PM10-value"  >--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span style="color: #ffe5ad">{{ga_oldval}}</span></div>
-                                                            <div class="value" id="59053893-PM34ww0txt"><NumberGrow :value="strs(data ? data.ga.content :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-PM34ww0txt"><NumberGrow :value="strs(data ? data.ga :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{ga_oldval_v}}</span>   </div>
-                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.ga.content :'')"></NumberGrow></div>
+                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.ga :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
@@ -79,11 +80,11 @@
                                                             </div>
                                                             <div class="value" id="59053893-HUMI-value"  >--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span style="color: #ffe5ad">{{sh_oldval}}</span></div>
-                                                            <div class="value" id="59053893-HUMItxt"><NumberGrow :value="strs(data ? data.sh.content :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-HUMItxt"><NumberGrow :value="strs(data ? data.sh :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{sh_oldval_v}}</span>   </div>
-                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.sh.content :'')"></NumberGrow></div>
+                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.sh :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
@@ -92,11 +93,11 @@
                                                             </div>
                                                             <div class="value" id="59053893-TEMP-value"  >--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{bj_oldval}}</span> </div>
-                                                            <div class="value" id="59053893-TEMPtxt"><NumberGrow :value="strs(data ? data.bj.content :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-TEMPtxt"><NumberGrow :value="strs(data ? data.bj :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{bj_oldval_v}}</span>   </div>
-                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.bj.content :'')"></NumberGrow></div>
+                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.bj :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
@@ -105,11 +106,11 @@
                                                             </div>
                                                             <div class="value" id="59053893-CO2-value"  >--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{sz_oldval}}</span> </div>
-                                                            <div class="value"  id="59053893-CO2txt"><NumberGrow :value="strs(data ? data.sz.content :'')"></NumberGrow></div>
+                                                            <div class="value"  id="59053893-CO2txt"><NumberGrow :value="strs(data ? data.sz :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{sz_oldval_v}}</span>   </div>
-                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.sz.content :'')"></NumberGrow></div>
+                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.sz :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
@@ -118,11 +119,11 @@
                                                             </div>
                                                             <div class="value" id="59053893-VOC-value"  >--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{gz_oldval}}</span> </div>
-                                                            <div class="value" id="59053893-VOCtxt"><NumberGrow :value="strs(data ? data.gz.content :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-VOCtxt"><NumberGrow :value="strs(data ? data.gz :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">上次: <span class="colors">{{gz_oldval_v}}</span>  </div>
-                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.gz.content :'')"></NumberGrow></div>
+                                                            <div class="value"><NumberGrow :value="strs(datas ? datas.gz :'')"></NumberGrow></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                     </div>
@@ -210,83 +211,88 @@
                                     <tbody>
                                     <tr>
                                         <td>重庆</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.cq.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cq.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.cq :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cq :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>赣州</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.gzgz.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.gzgz.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.gzgz :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.gzgz :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>杭州</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.hz.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.hz.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.hz :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.hz :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>成都</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.cd.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cd.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.cd :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cd :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>天津</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.tj.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.tj.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.tj :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.tj :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>苏州</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.szsz.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.szsz.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.szsz :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.szsz :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>南京</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.nj.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.nj.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.nj :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.nj :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>贵阳</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.gy.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.gy.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.gy :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.gy :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>长沙</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.cs.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cs.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.cs :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cs :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>沈阳</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r['sy'].content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs['sy'].content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r['sy'] :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs['sy'] :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>济南</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.jn.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.jn.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.jn :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.jn :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>宁波</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.nb.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.nb.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.nb :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.nb :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>无锡</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.wx.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.wx.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.wx :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.wx :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>郴州</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.cz.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cz.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.cz :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.cz :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>大连</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.dl.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.dl.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.dl :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.dl :'')"></NumberGrows></td>
                                     </tr>
                                     <tr>
                                         <td>合肥</td>
-                                        <td><NumberGrows :value="strs(data_r ? data_r.hf.content :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs ? data_rs.hf.content :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.hf :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.hf :'')"></NumberGrows></td>
+                                    </tr>
+                                    <tr>
+                                        <td>武汉</td>
+                                        <td><NumberGrows :value="strs(data_r ? data_r.wh :'')"></NumberGrows></td>
+                                        <td><NumberGrows :value="strs(data_rs ? data_rs.wh :'')"></NumberGrows></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -627,17 +633,17 @@
                             for(let i=0;i<datas.length;i++){
                                 day_date.push(datas[i].ceate_time)
 
-                                sh_vue_data.push(this.tasterNumber(((JSON.parse(datas[i].vue)).sh.content)))
-                                sh_react_data.push(this.tasterNumber(((JSON.parse(datas[i].react)).sh.content)))
+                                sh_vue_data.push(JSON.parse(datas[i].vue).sh)
+                                sh_react_data.push(JSON.parse(datas[i].react).sh)
 
-                                bj_vue_data.push(this.tasterNumber(((JSON.parse(datas[i].vue)).bj.content)))
-                                bj_react_data.push(this.tasterNumber(((JSON.parse(datas[i].react)).bj.content)))
+                                bj_vue_data.push(JSON.parse(datas[i].vue).bj)
+                                bj_react_data.push(JSON.parse(datas[i].react).bj)
 
-                                sz_vue_data.push(this.tasterNumber(((JSON.parse(datas[i].vue)).sz.content)))
-                                sz_react_data.push(this.tasterNumber(((JSON.parse(datas[i].react)).sz.content)))
+                                sz_vue_data.push(JSON.parse(datas[i].vue).sz)
+                                sz_react_data.push(JSON.parse(datas[i].react).sz)
 
-                                gz_vue_data.push(this.tasterNumber(((JSON.parse(datas[i].vue)).gz.content)))
-                                gz_react_data.push(this.tasterNumber(((JSON.parse(datas[i].react)).gz.content)))
+                                gz_vue_data.push(JSON.parse(datas[i].vue).gz)
+                                gz_react_data.push(JSON.parse(datas[i].react).gz)
 
 
                             }
@@ -718,11 +724,11 @@
                     if(res.code==200){
                         this.data=res.data;
                         let obgdata = {};
-                          obgdata.ga= this.strs(res.data? res.data.ga.content :'');
-                          obgdata.sh= this.strs(res.data? res.data.sh.content:'');
-                          obgdata.bj= this.strs(res.data? res.data.bj.content:'');
-                          obgdata.sz= this.strs(res.data? res.data.sz.content:'');
-                          obgdata.gz= this.strs(res.data? res.data.gz.content:'');
+                          obgdata.ga= this.strs(res.data? res.data.ga :'');
+                          obgdata.sh= this.strs(res.data? res.data.sh:'');
+                          obgdata.bj= this.strs(res.data? res.data.bj:'');
+                          obgdata.sz= this.strs(res.data? res.data.sz:'');
+                          obgdata.gz= this.strs(res.data? res.data.gz:'');
 
                           this.ga_old = obgdata.ga;
                           this.sh_old = obgdata.sh;
@@ -750,11 +756,11 @@
                     if(res.code==200){
                         this.datas=res.data;
                         let obgdata = {};
-                        obgdata.ga= this.strs(res.data? res.data.ga.content :'');
-                        obgdata.sh= this.strs(res.data? res.data.sh.content:'');
-                        obgdata.bj= this.strs(res.data? res.data.bj.content:'');
-                        obgdata.sz= this.strs(res.data? res.data.sz.content:'');
-                        obgdata.gz= this.strs(res.data? res.data.gz.content:'');
+                        obgdata.ga= this.strs(res.data? res.data.ga :'');
+                        obgdata.sh= this.strs(res.data? res.data.sh:'');
+                        obgdata.bj= this.strs(res.data? res.data.bj:'');
+                        obgdata.sz= this.strs(res.data? res.data.sz:'');
+                        obgdata.gz= this.strs(res.data? res.data.gz:'');
 
                         this.ga_old_v = obgdata.ga;
                         this.sh_old_v = obgdata.sh;
@@ -833,5 +839,11 @@
         #59053893-box{
             padding-right: 2%;
         }
+    }
+    .titles{
+        text-align: right;
+        font-size: 12px;
+        margin-top: 5px;
+        color: rgba(255, 175, 0, 0.3);
     }
 </style>
