@@ -29,6 +29,9 @@ table{width: 100%;height: 100%;}
 table.tablisty th,table.tablisty td{
     text-align:center;
 }
+html,body{
+    height: 100%;
+}
 .footer{clear: both; padding-left: 2%;}
 .footer .title{font-weight: bold; font-size: 20px;}
 #main .g .text{
