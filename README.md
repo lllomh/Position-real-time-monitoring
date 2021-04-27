@@ -9,7 +9,7 @@ __注：此项目纯属个人爱好，不涉及招聘等问题。__
 
 
 ## 技术栈
-vue2.0  + vue-axios + vue-router + webpack + ES6/7 + svg
+vue3.0  + vue-axios + vue-router + webpack + ES6/7 + svg
 
 
 

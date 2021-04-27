@@ -14,6 +14,14 @@
                            前端框架实时招聘热度
                         </div>
                         <div class="titles">数据来源: 各大主流招聘平台</div>
+                        <div class="github">
+                           <span class="ff">
+                                <a href="https://github.com/lllomh/Position-real-time-monitoring" target="_blank"><img src="https://img.shields.io/github/stars/lllomh/Position-real-time-monitoring?style=social" alt=""/></a>
+                            </span>
+                            <span class="ff yu" style="margin-left: 5px">
+                                <a href="https://github.com/lllomh/Position-real-time-monitoring" target="_blank"> <img src="https://img.shields.io/github/forks/lllomh/Position-real-time-monitoring?style=social" alt=""/></a>
+                            </span>
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -845,5 +853,17 @@
         font-size: 12px;
         margin-top: 5px;
         color: rgba(255, 175, 0, 0.3);
+    }
+    .github{
+        text-align: center;
+    }
+    .logo{
+        position: relative;
+    }
+    .ff{
+
+    }
+    .yu{
+
     }
 </style>
