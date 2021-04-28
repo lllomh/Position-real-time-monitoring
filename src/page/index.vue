@@ -61,10 +61,11 @@
                                                 <div class="item-box">
                                                     <div style="width: 915%;display: flex; position: relative; transition-duration: 0s;">
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
-                                                            <div class="info">
+                                                            <div class="info" style="position: relative">
                                                                 <span class="title" id="59053895-PM10-title">城市/实时职位数</span>
+                                                                <span style="position: absolute;font-size: 15px;left: 55px;top: 55px;">刷新倒计时: <b style="color: #ff399e">{{count}}</b></span>
                                                             </div>
-                                                            <div class="value" id="59053893-PM15-value">--</div>
+                                                            <div class="value" id="59053893-PM10-val34ue"  >--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">react上一次变动前数量</div>
                                                             <div class="value" id="59053893-PM1585txt">react</div>
                                                             <div class="value" id="59053893-PM5-value">--</div>
@@ -345,6 +346,10 @@
     },
         data () {
             return {
+                show: true,
+                count: "",
+                TIME_COUNT:300,
+                timer: null,
                 data:'',
                 datas:'',
                 data_r:'',
@@ -464,6 +469,7 @@
 
         },
         mounted() {
+            this.getCode()
             this.getdata();
             this.getdatas();
 
@@ -757,7 +763,7 @@
                         setTimeout(()=>{
                             this.dataArrreact=[]
                             this.getdata()
-                        },5000)
+                        },300000)
                     }
 
                 });
@@ -788,7 +794,7 @@
                         setTimeout(()=>{
                             this.dataArrvue=[]
                             this.getdatas()
-                        },5000)
+                        },300000)
                     }
 
                 })
@@ -802,12 +808,29 @@
                         this.data_r=res.data;
                         setTimeout(()=>{
                             this.getdatar()
-                        },5000)
+
+                        },300000 )
                     }
 
                 });
 
             },
+                getCode() {
+                    if (!this.timer) {
+                        this.count = this.TIME_COUNT;
+                        this.show = false;
+                        this.timer = setInterval(() => {
+                            if (this.count > 0 && this.count <= this.TIME_COUNT) {
+                                this.count -= 1;
+                            } else {
+                                this.show = true;
+                                clearInterval(this.timer);
+                                this.timer = null;
+                                this.getCode()
+                            }
+                        }, 1000);
+                    }
+                },
             getdatars(){
                 let postData = this.$qs.stringify({
                     requestName:"getdataalls",
@@ -817,7 +840,7 @@
                         this.data_rs=res.data;
                         setTimeout(()=>{
                             this.getdatars()
-                        },5000)
+                        },300000)
                     }
 
                 });
