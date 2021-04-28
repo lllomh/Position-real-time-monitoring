@@ -15,11 +15,14 @@
                         </div>
                         <div class="titles">数据来源: 各大主流招聘平台</div>
                         <div class="github">
-                           <span class="ff">
+                           <span class="ff" style="margin-left: 115px">
                                 <a href="https://github.com/lllomh/Position-real-time-monitoring" target="_blank"><img src="https://img.shields.io/github/stars/lllomh/Position-real-time-monitoring?style=social" alt=""/></a>
                             </span>
                             <span class="ff yu" style="margin-left: 5px">
                                 <a href="https://github.com/lllomh/Position-real-time-monitoring" target="_blank"> <img src="https://img.shields.io/github/forks/lllomh/Position-real-time-monitoring?style=social" alt=""/></a>
+                            </span>
+                            <span class="ff wu" style="margin-left: 5px">
+                                <a href="https://github.com/lllomh/Position-real-time-monitoring" target="_blank"><iframe id="wacth" src="https://ghbtns.com/github-btn.html?user=lllomh&repo=Position-real-time-monitoring&type=watch&count=true&v=2" frameborder="0" scrolling="0" width="200" height="20" title="GitHub"></iframe></a>
                             </span>
                         </div>
                     </div>
@@ -392,6 +395,9 @@
                 charts: '',
                 isac:false,
             }
+        },
+        created(){
+
         },
         computed:{
 

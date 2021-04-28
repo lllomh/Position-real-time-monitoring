@@ -28,6 +28,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 let proxyHost = "http://api.lllomh.com";
 // let proxyHost = "http://e23004507c.imwork.net";
 module.exports = {
+    lintOnSave:false,
     devServer: {
         host: "localhost",
         port: `5009`,
