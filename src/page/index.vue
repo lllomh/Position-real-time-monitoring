@@ -348,7 +348,7 @@
             return {
                 show: true,
                 count: "",
-                TIME_COUNT:300,
+                TIME_COUNT:600,
                 timer: null,
                 data:'',
                 datas:'',
@@ -763,7 +763,7 @@
                         setTimeout(()=>{
                             this.dataArrreact=[]
                             this.getdata()
-                        },300000)
+                        },600000)
                     }
 
                 });
@@ -794,7 +794,7 @@
                         setTimeout(()=>{
                             this.dataArrvue=[]
                             this.getdatas()
-                        },300000)
+                        },600000)
                     }
 
                 })
@@ -809,7 +809,7 @@
                         setTimeout(()=>{
                             this.getdatar()
 
-                        },300000 )
+                        },600000 )
                     }
 
                 });
@@ -840,7 +840,7 @@
                         this.data_rs=res.data;
                         setTimeout(()=>{
                             this.getdatars()
-                        },300000)
+                        },600000)
                     }
 
                 });
