@@ -592,7 +592,7 @@
                         series: [
                             {
                                 name: 'react',
-                                type: 'bar',
+                                type: 'line',
                                 data: this.reactData,
                                 itemStyle: {
                                     normal: {
@@ -609,7 +609,7 @@
                             },
                             {
                                 name: 'vue',
-                                type: 'bar',
+                                type: 'line',
                                 data: this.vueData,
                                 itemStyle: {
                                     normal: {
