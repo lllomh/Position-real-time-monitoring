@@ -25,7 +25,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 // let proxyHost = "http://api.lllomh.com/";
 // let proxyHost = "http://192.168.1.145";
 // let proxyHost = "http://192.168.1.51";
-let proxyHost = "http://api.lllomh.cn";
+let proxyHost = "http://api.lllomh.com";
 // let proxyHost = "http://e23004507c.imwork.net";
 module.exports = {
     lintOnSave:false,

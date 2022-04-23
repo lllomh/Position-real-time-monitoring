@@ -171,7 +171,7 @@ html,body{
 }
 .head-top .textsub a{
     display: block;
-    width: 115px;
+    /*width: 115px;*/
     height: 30px;
     line-height: 30px;
     margin-top: 3px;
