@@ -36,25 +36,25 @@ axios.interceptors.request.use(config => {
         }
         return myJson;
     }
-    var jsObject = getUrlVars(config.data);
+    // var jsObject = getUrlVars(config.data);
     /**
      *  得到参数中的 requestName 字段，用于决定下次发起请求，取消对应的 相同字段的请求
      *  如果没有 requestName 就默认添加一个 不同的时间戳
      */
     let requestName;
-    if(config.method === 'post'){
-        if(config.data && jsObject.requestName){
-            requestName = jsObject.requestName
-        }else{
-            requestName = new Date().getTime()
-        }
-    }else{
-        if(config.params && config.params.requestName){
-            requestName = config.params.requestName
-        }else{
-            requestName = new Date().getTime()
-        }
-    }
+    // if(config.method === 'post'){
+    //     if(config.data && jsObject.requestName){
+    //         requestName = jsObject.requestName
+    //     }else{
+    //         requestName = new Date().getTime()
+    //     }
+    // }else{
+    //     if(config.params && config.params.requestName){
+    //         requestName = config.params.requestName
+    //     }else{
+    //         requestName = new Date().getTime()
+    //     }
+    // }
     // 判断，如果这里拿到的参数中的 requestName 在上一次请求中已经存在，就取消上一次的请求
 
     if (requestName) {

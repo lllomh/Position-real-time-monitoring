@@ -56,16 +56,19 @@ html,body{
 .btm1 {
     position: absolute;
     font-size: 15px;
-    right: 190px;
+    right: 240px;
     top: 12px;
 }
 .btm2 {
-    position: absolute; font-size: 15px;right: 140px;top: 12px;
+    position: absolute; font-size: 15px;right: 190px;top: 12px;
 }
 .btm3 {
-    position: absolute; font-size: 15px;right: 90px;top: 12px;
+    position: absolute; font-size: 15px;right: 140px;top: 12px;
 }
 .btm4 {
+    position: absolute; font-size: 15px;right: 90px;top: 12px;
+}
+.btm5{
     position: absolute; font-size: 15px;right: 40px;top: 12px;
 }
 

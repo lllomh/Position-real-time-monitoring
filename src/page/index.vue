@@ -51,6 +51,9 @@
                                                         <div class="btns btm4" :class="{acitve:isacitve3}" style="">
                                                             <button @click="getCrtyData(3)">广州</button>
                                                         </div>
+                                                        <div class="btns btm5" :class="{acitve:isacitve4}" style="">
+                                                            <button @click="getCrtyData(4)">全国</button>
+                                                        </div>
                                                         <div id="main" style="width: 100%;height: 100%"></div>
                                                     </div>
                                                 </div>
@@ -79,7 +82,7 @@
                                                             </div>
                                                             <div class="value" id="59053893-PM10-value"  >--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">昨天: <span style="color: #ffe5ad">{{data ?JSON.parse(data[(data.length-2)].react)['ga']:''}}</span></div>
-                                                            <div class="value" id="59053893-PM34ww0txt"><NumberGrow :value="strs(data ? (JSON.parse(data[(Number(data.length-1))].vue)['ga']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-PM34ww0txt"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].react)['ga']).toString() :'')"></NumberGrow></div>
 
                                                             <div class="value">--</div>
                                                             <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].vue)['ga']:''}}</span>   </div>
@@ -364,6 +367,10 @@
                 sz_react_data:[],
                 gz_vue_data:[],
                 gz_react_data:[],
+                ga_vue_data:[],
+                ga_react_data:[],
+                nationalDataVue:[],
+                nationalDataReact:[],
                 ga_old:'',
                 sh_old:'',
                 bj_old:'',
@@ -389,6 +396,7 @@
                 isacitve1:false,
                 isacitve2:false,
                 isacitve3:false,
+                isacitve4:false,
                 rotate: 90,
                 align: 'left',
                 verticalAlign: 'middle',
@@ -544,7 +552,7 @@
                                     textStyle: {
                                         color: '#ffffff'
                                     }
-                                }
+                                },
                             }
                         ],
                         yAxis: [
@@ -588,6 +596,11 @@
                                 name: 'react',
                                 type: 'line',
                                 data: this.reactData,
+                                lineStyle: {// 设置线条的style等
+                                    normal: {
+                                        color: 'red', // 折线线条颜色:红色
+                                    },
+                                },
                                 itemStyle: {
                                     normal: {
                                         label: {
@@ -605,27 +618,31 @@
                                 name: 'vue',
                                 type: 'line',
                                 data: this.vueData,
+                                lineStyle: {// 设置线条的style等
+                                    normal: {
+                                        color: '#fdf600', // 折线线条颜色:红色
+                                    },
+                                },
                                 itemStyle: {
                                     normal: {
                                         label: {
                                             show: true, //开启显示
                                             position: 'top', //在上方显示
                                             textStyle: { //数值样式
-                                                color: '#2f4554',
+                                                color: '#fdf600',
                                                 fontSize: 16
                                             }
                                         }
                                     }
                                 },
                             },
+
+
                         ]
                     })
                 },
             getlistDates_more(){
-                let postData = this.$qs.stringify({
-                    requestName:"getlistDates_more",
-                });
-                this.$post(P_GET_DATALIST_MORE,postData).then(res => {
+                this.$get(P_GET_DATALIST_MORE).then(res => {
                     if(res.code==200){
                         this.data_rs_more=res.data[0];
                         // console.log(this.data_rs_more,'data_rs_more')
@@ -634,10 +651,7 @@
                 });
             },
             getListDates(){
-                let postData = this.$qs.stringify({
-                    requestName:"getdatalists",
-                });
-                this.$post(P_GET_DATALIST,postData).then(res => {
+                this.$get(P_GET_DATALIST).then(res => {
                     if(res.code==200){
                        let datas = res.data ? res.data :'';
                        this.data=datas;
@@ -656,6 +670,11 @@
 
                             let gz_vue_data = [];
                             let gz_react_data = [];
+
+                            let ga_vue_data = [];
+                            let ga_react_data = [];
+
+                            let ga_national_data = [];
                             for(let i=0;i<datas.length;i++){
                                 day_date.push(datas[i].ceate_time)
 
@@ -671,11 +690,16 @@
                                 gz_vue_data.push(JSON.parse(datas[i].vue).gz)
                                 gz_react_data.push(JSON.parse(datas[i].react).gz)
 
+                                ga_vue_data.push(JSON.parse(datas[i].vue).ga)
+                                ga_react_data.push(JSON.parse(datas[i].react).ga)
+
 
                             }
 
                             this.timeDtae = day_date;
                             this.vueData = sh_vue_data;
+                            this.nationalDataVue=ga_vue_data
+                            this.nationalDataReact=ga_react_data
                             this.reactData = sh_react_data;
 
                             this.sh_vue_data= sh_vue_data;
@@ -743,6 +767,18 @@
                              this.drawPie('main')
                          })
                      }
+                 if(id==4){
+                     this.isacitve0=false;
+                     this.isacitve1=false;
+                     this.isacitve2=false;
+                     this.isacitve3=false;
+                     this.isacitve4=true;
+                     this.vueData = this.nationalDataVue;
+                     this.reactData = this.nationalDataReact;
+                     this.$nextTick(function() {
+                         this.drawPie('main')
+                     })
+                 }
              },
 
                 getCode() {
