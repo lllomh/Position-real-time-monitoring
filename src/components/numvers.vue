@@ -48,7 +48,9 @@
             }
         },
         mounted () {
-
+            if (this.value) {
+                this.numberGrow(this.$refs.numberGrow)
+            }
         }
     }
 </script>

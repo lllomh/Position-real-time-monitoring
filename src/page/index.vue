@@ -54,6 +54,10 @@
                                                         <div class="btns btm5" :class="{acitve:isacitve4}" style="">
                                                             <button @click="getCrtyData(4)">全国</button>
                                                         </div>
+                                                        <div class="chart-loading" v-if="loading">
+                                                            <div class="chart-spinner"></div>
+                                                            <p class="chart-loading-text">图表加载中...</p>
+                                                        </div>
                                                         <div id="main" style="width: 100%;height: 100%"></div>
                                                     </div>
                                                 </div>
@@ -65,7 +69,7 @@
                                                     <div style="width: 915%;display: flex; position: relative; transition-duration: 0s;">
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
                                                             <div class="info" style="position: relative">
-                                                                <span class="title" id="59053895-PM10-title">城市/{{data ?data[(data.length-1)].ceate_time:''}}</span>
+                                                                <span class="title" id="59053895-PM10-title">城市/<template v-if="data">{{data[(data.length-1)].ceate_time}}</template><span v-else class="mini-spinner"></span></span>
                                                                 <span style="position: absolute;font-size: 15px;left: 55px;top: 55px;">数据每天凌晨更新</span>
                                                             </div>
                                                             <div class="value" id="59053893-PM10-val34ue"  >--</div>
@@ -80,65 +84,65 @@
                                                             <div class="info">
                                                                 <span class="title" id="59053893-PM10-title">全国</span>
                                                             </div>
-                                                            <div class="value" id="59053893-PM10-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span style="color: #ffe5ad">{{data ?JSON.parse(data[(data.length-2)].react)['ga']:''}}</span></div>
-                                                            <div class="value" id="59053893-PM34ww0txt"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].react)['ga']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-PM10-value">--</div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span style="color: #ffe5ad" v-if="data">{{JSON.parse(data[(data.length-2)].react)['ga']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value" id="59053893-PM34ww0txt"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].react)['ga']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].vue)['ga']:''}}</span>   </div>
-                                                            <div class="value"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].vue)['ga']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors" v-if="data">{{JSON.parse(data[(data.length-2)].vue)['ga']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].vue)['ga']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
                                                             <div class="info">
                                                                 <span class="title" id="59053893-HUMI-title">上海</span>
                                                             </div>
-                                                            <div class="value" id="59053893-HUMI-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span style="color: #ffe5ad">{{data ?JSON.parse(data[(data.length-2)].react)['sh']:''}}</span></div>
-                                                            <div class="value" id="59053893-HUMItxt"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].react)['sh']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-HUMI-value">--</div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span style="color: #ffe5ad" v-if="data">{{JSON.parse(data[(data.length-2)].react)['sh']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value" id="59053893-HUMItxt"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].react)['sh']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].vue)['sh']:''}}</span>   </div>
-                                                            <div class="value"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].vue)['sh']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors" v-if="data">{{JSON.parse(data[(data.length-2)].vue)['sh']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].vue)['sh']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
                                                             <div class="info">
                                                                 <span class="title" id="59053893-TEMP-title">北京</span>
                                                             </div>
-                                                            <div class="value" id="59053893-TEMP-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].react)['bj']:''}}</span> </div>
-                                                            <div class="value" id="59053893-TEMPtxt"><NumberGrow :value="strs(data ?(JSON.parse(data[(data.length-1)].react)['bj']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-TEMP-value">--</div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors" v-if="data">{{JSON.parse(data[(data.length-2)].react)['bj']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value" id="59053893-TEMPtxt"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].react)['bj']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].vue)['bj']:''}}</span>   </div>
-                                                            <div class="value"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].vue)['bj']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors" v-if="data">{{JSON.parse(data[(data.length-2)].vue)['bj']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].vue)['bj']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
                                                             <div class="info">
                                                                 <span class="title" id="59053893-CO2-title">深圳</span>
                                                             </div>
-                                                            <div class="value" id="59053893-CO2-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].react)['sz']:''}}</span> </div>
-                                                            <div class="value"  id="59053893-CO2txt"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].react)['sz']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-CO2-value">--</div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors" v-if="data">{{JSON.parse(data[(data.length-2)].react)['sz']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value" id="59053893-CO2txt"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].react)['sz']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].vue)['sz']:''}}</span>   </div>
-                                                            <div class="value"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].vue)['sz']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors" v-if="data">{{JSON.parse(data[(data.length-2)].vue)['sz']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].vue)['sz']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                         <div class="item tmbg" style="height: 100%;margin:0 20px 0 0">
                                                             <div class="info">
                                                                 <span class="title" id="59053893-VOC-title">广州</span>
                                                             </div>
-                                                            <div class="value" id="59053893-VOC-value"  >--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].react)['gz']:''}}</span> </div>
-                                                            <div class="value" id="59053893-VOCtxt"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].react)['gz']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" id="59053893-VOC-value">--</div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors" v-if="data">{{JSON.parse(data[(data.length-2)].react)['gz']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value" id="59053893-VOCtxt"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].react)['gz']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
 
                                                             <div class="value">--</div>
-                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors">{{data ?JSON.parse(data[(data.length-2)].vue)['gz']:''}}</span>  </div>
-                                                            <div class="value"><NumberGrow :value="strs(data ? (JSON.parse(data[(data.length-1)].vue)['gz']).toString() :'')"></NumberGrow></div>
+                                                            <div class="value" style="font-size:12px;margin:5px 0">昨天: <span class="colors" v-if="data">{{JSON.parse(data[(data.length-2)].vue)['gz']}}</span><span v-else class="mini-spinner"></span></div>
+                                                            <div class="value"><NumberGrow v-if="data" :value="strs((JSON.parse(data[(data.length-1)].vue)['gz']).toString())"></NumberGrow><span v-else class="mini-spinner"></span></div>
                                                             <div class="value" style="font-size:12px;margin:5px 0"> </div>
                                                         </div>
                                                     </div>
@@ -226,88 +230,88 @@
                                     <tbody>
                                     <tr>
                                         <td>重庆</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['cq']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['cq']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['cq']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['cq']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>赣州</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['gzgz']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['gzgz']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['gzgz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['gzgz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>杭州</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['hz']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['hz']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['hz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['hz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>成都</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['cd']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['cd']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['cd']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['cd']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>天津</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['tj']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['tj']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['tj']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['tj']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>苏州</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['szsz']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['szsz']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['szsz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['szsz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>南京</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['nj']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['nj']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['nj']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['nj']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>贵阳</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['gy']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['gy']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['gy']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['gy']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>长沙</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['cs']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['cs']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['cs']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['cs']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>沈阳</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['sy']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['sy']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['sy']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['sy']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>济南</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['jn']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['jn']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['jn']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['jn']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>宁波</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ?(JSON.parse(data_rs_more.react)['nb']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['nb']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['nb']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['nb']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>无锡</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['wx']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['wx']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['wx']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['wx']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>郴州</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['cz']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['cz']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['cz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['cz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>大连</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['dl']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['dl']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['dl']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['dl']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>合肥</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['hf']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['hf']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['hf']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['hf']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     <tr>
                                         <td>武汉</td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.react)['wh']).toString() :'')"></NumberGrows></td>
-                                        <td><NumberGrows :value="strs(data_rs_more ? (JSON.parse(data_rs_more.vue)['wh']).toString() :'')"></NumberGrows></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['wh']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
+                                        <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['wh']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -346,6 +350,7 @@
     },
         data () {
             return {
+                loading: true,
                 show: true,
                 count: "",
                 TIME_COUNT:600,
@@ -476,15 +481,14 @@
         },
         mounted() {
             this.getCode()
-            this.getlistDates_more()
-            this.getListDates();
+            this.loadAllData()
 
             this.$nextTick(function() {
                 this.drawPie('main')
             })
 
             window.addEventListener("resize",()=>{
-                    this.charts.resize();
+                if(this.charts) this.charts.resize();
             })
 
         },
@@ -641,17 +645,28 @@
                         ]
                     })
                 },
+            loadAllData(){
+                this.loading = true;
+                Promise.all([
+                    this.getlistDates_more(),
+                    this.getListDates()
+                ]).then(() => {
+                    this.loading = false;
+                }).catch(() => {
+                    this.loading = false;
+                });
+            },
             getlistDates_more(){
-                this.$get(P_GET_DATALIST_MORE).then(res => {
+                return this.$get(P_GET_DATALIST_MORE).then(res => {
                     if(res.code==200){
                         this.data_rs_more=res.data[0];
-                        // console.log(this.data_rs_more,'data_rs_more')
                     }
-
+                }).catch(() => {
+                    return Promise.reject();
                 });
             },
             getListDates(){
-                this.$get(P_GET_DATALIST).then(res => {
+                return this.$get(P_GET_DATALIST).then(res => {
                     if(res.code==200){
                        let datas = res.data ? res.data :'';
                        this.data=datas;
@@ -674,7 +689,6 @@
                             let ga_vue_data = [];
                             let ga_react_data = [];
 
-                            let ga_national_data = [];
                             for(let i=0;i<datas.length;i++){
                                 day_date.push(datas[i].ceate_time)
 
@@ -692,8 +706,6 @@
 
                                 ga_vue_data.push(JSON.parse(datas[i].vue).ga)
                                 ga_react_data.push(JSON.parse(datas[i].react).ga)
-
-
                             }
 
                             this.timeDtae = day_date;
@@ -713,13 +725,10 @@
 
                             this.gz_vue_data= gz_vue_data;
                             this.gz_react_data=gz_react_data;
-
-                            window.console.log()
                         }
-
-
                     }
-
+                }).catch(() => {
+                    return Promise.reject();
                 });
             },
              getCrtyData(id){
@@ -821,6 +830,51 @@
 </script>
 
 <style>
+    /* 数字位置小旋转圈 */
+    .mini-spinner {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba(129, 255, 4, 0.2);
+        border-top-color: #81ff04;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+        vertical-align: middle;
+    }
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    /* 图表区域 loading */
+    .chart-loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        background: rgba(5, 20, 50, 0.6);
+    }
+    .chart-spinner {
+        width: 36px;
+        height: 36px;
+        border: 3px solid rgba(129, 255, 4, 0.15);
+        border-top-color: #81ff04;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+    .chart-loading-text {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 13px;
+        margin-top: 10px;
+        letter-spacing: 1px;
+    }
+    .quxian {
+        position: relative;
+    }
     @media (max-width: 767px) {
         .hix{
             display: none;
