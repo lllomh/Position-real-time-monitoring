@@ -397,8 +397,8 @@
                 bj_oldval_v:'',
                 sz_oldval_v:'',
                 gz_oldval_v:'',
-                isacitve0:true,
-                isacitve1:false,
+                isacitve0:false,
+                isacitve1:true,
                 isacitve2:false,
                 isacitve3:false,
                 isacitve4:false,
@@ -607,6 +607,7 @@
                                 },
                                 itemStyle: {
                                     normal: {
+                                        color: 'red',
                                         label: {
                                             show: true, //开启显示
                                             position: 'top', //在上方显示
@@ -629,6 +630,7 @@
                                 },
                                 itemStyle: {
                                     normal: {
+                                        color: '#fdf600',
                                         label: {
                                             show: true, //开启显示
                                             position: 'top', //在上方显示
@@ -709,10 +711,10 @@
                             }
 
                             this.timeDtae = day_date;
-                            this.vueData = sh_vue_data;
+                            this.vueData = bj_vue_data;
                             this.nationalDataVue=ga_vue_data
                             this.nationalDataReact=ga_react_data
-                            this.reactData = sh_react_data;
+                            this.reactData = bj_react_data;
 
                             this.sh_vue_data= sh_vue_data;
                             this.sh_react_data=sh_react_data;
