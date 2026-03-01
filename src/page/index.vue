@@ -488,6 +488,16 @@
                     this.toadd();
                 },
                 drawPie(id){
+                    var zoomStart = 0;
+                    var zoomEnd = 100;
+                    if(this.charts){
+                        var option = this.charts.getOption();
+                        if(option && option.dataZoom && option.dataZoom.length > 0){
+                            zoomStart = option.dataZoom[0].start;
+                            zoomEnd = option.dataZoom[0].end;
+                        }
+                        this.charts.dispose();
+                    }
                     this.charts = echarts.init(document.getElementById(id))
                     var isMobile = window.innerWidth <= 767;
                     var isSmall = window.innerWidth <= 480;
@@ -606,8 +616,8 @@
                         dataZoom: [
                             {
                                 type: 'inside',
-                                start: 0,
-                                end: 100
+                                start: zoomStart,
+                                end: zoomEnd
                             },
                             {
                                 show: !isSmall,
@@ -616,8 +626,8 @@
                                 },
                                 type: 'slider',
                                 top: '90%',
-                                start: 0,
-                                end: 100,
+                                start: zoomStart,
+                                end: zoomEnd,
                                 borderColor: 'rgba(0,255,242,0.2)',
                                 fillerColor: 'rgba(0,255,242,0.08)',
                                 handleStyle: {
