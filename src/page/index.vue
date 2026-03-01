@@ -11,7 +11,7 @@
                     <span class="btn-text">+ 增加城市</span>
                 </button>
                 <div class="feedback-link" :class="{show: isac}">
-                    <a href="https://jq.qq.com/?_wv=1027&k=X8EDebNq" target="_blank" @keyup.enter="addToList">加群反馈</a>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=z92qJdPVwqCnPpnMSKhNRS5PoBn1erS9yAB0GAjmU9XagRlHGSlAI%2FZ%2FRONshIsm&busi_data=eyJncm91cENvZGUiOiIyOTAwNzgzNTMiLCJ0b2tlbiI6Iks4dG1ERlV2NkZvb28raGI2MGdZb2NlY3BZOVFCYUdXYVdFcWhaT2dmZk0yY3BzNFVkdXl5anRXV0NGQTRiTDUiLCJ1aW4iOiIyODU0MzcyOTYyIn0%3D&data=28rJgYEA_Lt0--8PEvuRxcNAiAzRCGIi-fyvEAZ_zn8WyKhQ9k6B0Ss1BZ4TteckYMfdSPpBQ8cQDUCKA-uatw&svctype=4&tempid=h5_group_info" target="_blank" @keyup.enter="addToList">加群反馈</a>
                 </div>
             </div>
             <div class="header-center">
