@@ -1,6 +1,6 @@
 # 🚀 Position Real-Time Monitoring
 
-[中文](./README.zh-CN.md) \| English
+English | / [中文](./README.zh-CN.md) 
 
 A lightweight **real-time position monitoring platform** for tracking
 and visualizing device locations on an interactive dashboard.
