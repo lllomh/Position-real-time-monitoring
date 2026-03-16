@@ -1,4 +1,4 @@
-# 🚀 Position Real-Time Monitoring
+# 🚀 Frontend Job Positions Real-Time Monitor
 
 English |  [中文](./README.zh-CN.md) 
 
@@ -14,7 +14,7 @@ and visualizing device locations on an interactive dashboard.
 
 # 📖 Overview
 
-**Position Real-Time Monitoring** is a system designed to **collect,
+**Frontend Job Position Real-Time Monitoring** is a system designed to **collect,
 process, and visualize job market data related to popular frontend
 frameworks across different cities**.
 
