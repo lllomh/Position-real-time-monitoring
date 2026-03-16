@@ -1,6 +1,13 @@
 # 📊 前言
 
+中文 |  [English](./README.md) 
+
 这是一个用于 **实时统计主流前端框架在各城市职位需求数量** 的可视化项目。
+
+![license](https://img.shields.io/badge/license-MIT-blue.svg)
+![node](https://img.shields.io/badge/node-%3E%3D18-green)
+![docker](https://img.shields.io/badge/docker-supported-blue)
+![status](https://img.shields.io/badge/status-active-success)
 
 系统会定期抓取各城市相关岗位数据，并在每天 **23:59
 自动保存统计记录**，逐渐积累形成历史数据。通过折线图等可视化方式，可以清晰地观察到各个前端框架在招聘市场中的
