@@ -1,28 +1,45 @@
 <template>
-    <div class="dashboard">
+    <div class="dashboard" @click="handleGlobalClick">
         <!-- 扫描线动效 -->
         <div class="scanline"></div>
 
         <!-- 顶部导航栏 -->
         <header class="dash-header">
             <div class="header-left">
-                <button class="neon-btn" @click="toadd()">
+                <button class="neon-btn" @click.stop="toadd()">
                     <span class="btn-glow"></span>
-                    <span class="btn-text">+ 增加城市</span>
+                    <span class="btn-text">{{ t.addCity }}</span>
                 </button>
                 <div class="feedback-link" :class="{show: isac}">
-                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=z92qJdPVwqCnPpnMSKhNRS5PoBn1erS9yAB0GAjmU9XagRlHGSlAI%2FZ%2FRONshIsm&busi_data=eyJncm91cENvZGUiOiIyOTAwNzgzNTMiLCJ0b2tlbiI6Iks4dG1ERlV2NkZvb28raGI2MGdZb2NlY3BZOVFCYUdXYVdFcWhaT2dmZk0yY3BzNFVkdXl5anRXV0NGQTRiTDUiLCJ1aW4iOiIyODU0MzcyOTYyIn0%3D&data=28rJgYEA_Lt0--8PEvuRxcNAiAzRCGIi-fyvEAZ_zn8WyKhQ9k6B0Ss1BZ4TteckYMfdSPpBQ8cQDUCKA-uatw&svctype=4&tempid=h5_group_info" target="_blank" @keyup.enter="addToList">加群反馈</a>
+                    <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=z92qJdPVwqCnPpnMSKhNRS5PoBn1erS9yAB0GAjmU9XagRlHGSlAI%2FZ%2FRONshIsm&busi_data=eyJncm91cENvZGUiOiIyOTAwNzgzNTMiLCJ0b2tlbiI6Iks4dG1ERlV2NkZvb28raGI2MGdZb2NlY3BZOVFCYUdXYVdFcWhaT2dmZk0yY3BzNFVkdXl5anRXV0NGQTRiTDUiLCJ1aW4iOiIyODU0MzcyOTYyIn0%3D&data=28rJgYEA_Lt0--8PEvuRxcNAiAzRCGIi-fyvEAZ_zn8WyKhQ9k6B0Ss1BZ4TteckYMfdSPpBQ8cQDUCKA-uatw&svctype=4&tempid=h5_group_info" target="_blank" @keyup.enter="addToList">{{ t.feedback }}</a>
                 </div>
             </div>
             <div class="header-center">
                 <div class="title-wrapper">
                     <div class="title-decoration left"></div>
-                    <h1 class="dash-title">前端框架招聘热度</h1>
+                    <h1 class="dash-title">{{ t.title }}</h1>
                     <div class="title-decoration right"></div>
                 </div>
-                <p class="dash-subtitle">数据来源: 各大主流招聘平台</p>
+                <p class="dash-subtitle">{{ t.subtitle }}</p>
             </div>
             <div class="header-right">
+                <!-- 语言切换 -->
+                <div class="lang-switcher" @click.stop>
+                    <button class="lang-btn" @click="langMenuOpen = !langMenuOpen">
+                        <span class="lang-icon">🌐</span>
+                        <span class="lang-label">{{ langLabels[currentLang] }}</span>
+                        <span class="lang-arrow" :class="{open: langMenuOpen}">▾</span>
+                    </button>
+                    <div class="lang-dropdown" v-if="langMenuOpen">
+                        <button
+                            v-for="(label, code) in langLabels"
+                            :key="code"
+                            :class="{active: currentLang === code}"
+                            @click="setLang(code)">
+                            {{ label }}
+                        </button>
+                    </div>
+                </div>
                 <div class="github-badges">
                     <a href="https://github.com/lllomh/Position-real-time-monitoring" target="_blank"><img src="https://img.shields.io/github/stars/lllomh/Position-real-time-monitoring?style=social" alt=""/></a>
                     <a href="https://github.com/lllomh/Position-real-time-monitoring" target="_blank"><img src="https://img.shields.io/github/forks/lllomh/Position-real-time-monitoring?style=social" alt=""/></a>
@@ -40,24 +57,24 @@
                     <div class="panel-header">
                         <div class="panel-title">
                             <span class="dot pulse"></span>
-                            职位趋势
+                            {{ t.trendTitle }}
                         </div>
                         <div class="city-tabs">
-                            <button :class="{active: isacitve0}" @click="getCrtyData(0)">上海</button>
-                            <button :class="{active: isacitve1}" @click="getCrtyData(1)">北京</button>
-                            <button :class="{active: isacitve2}" @click="getCrtyData(2)">深圳</button>
-                            <button :class="{active: isacitve3}" @click="getCrtyData(3)">广州</button>
-                            <button :class="{active: isacitve4}" @click="getCrtyData(4)">全国</button>
+                            <button :class="{active: isacitve0}" @click="getCrtyData(0)">{{ t.cities.sh }}</button>
+                            <button :class="{active: isacitve1}" @click="getCrtyData(1)">{{ t.cities.bj }}</button>
+                            <button :class="{active: isacitve2}" @click="getCrtyData(2)">{{ t.cities.sz }}</button>
+                            <button :class="{active: isacitve3}" @click="getCrtyData(3)">{{ t.cities.gz }}</button>
+                            <button :class="{active: isacitve4}" @click="getCrtyData(4)">{{ t.cities.ga }}</button>
                         </div>
                     </div>
                     <div class="year-tabs" v-if="availableYears.length > 1">
-                        <button :class="{active: selectedYear === 'all'}" @click="setYear('all')">全部</button>
+                        <button :class="{active: selectedYear === 'all'}" @click="setYear('all')">{{ t.all }}</button>
                         <button v-for="y in availableYears" :key="y" :class="{active: selectedYear === y}" @click="setYear(y)">{{y}}</button>
                     </div>
                     <div class="chart-container">
                         <div class="chart-loading" v-if="loading">
                             <div class="chart-spinner"></div>
-                            <p class="chart-loading-text">数据加载中...</p>
+                            <p class="chart-loading-text">{{ t.loading }}</p>
                         </div>
                         <div id="main" style="width: 100%; height: 100%"></div>
                     </div>
@@ -75,7 +92,7 @@
                             <template v-if="data">{{data[(data.length-1)].ceate_time}}</template>
                             <span v-else class="mini-spinner"></span>
                         </div>
-                        <div class="card-hint">数据每天凌晨更新</div>
+                        <div class="card-hint">{{ t.dataUpdateHint }}</div>
                         <div class="card-divider"></div>
                         <div class="card-row">
                             <span class="framework-tag react">React</span>
@@ -93,7 +110,7 @@
                         <div class="card-corner tr"></div>
                         <div class="card-corner bl"></div>
                         <div class="card-corner br"></div>
-                        <div class="card-label">全国</div>
+                        <div class="card-label">{{ t.cities.ga }}</div>
                         <div class="card-divider"></div>
                         <div class="card-row">
                             <span class="framework-tag react">R</span>
@@ -102,7 +119,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['ga']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['ga']}}</span><span v-else class="mini-spinner"></span></div>
                         <div class="card-row">
                             <span class="framework-tag vue">V</span>
                             <span class="card-value vue-val">
@@ -110,7 +127,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['ga']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['ga']}}</span><span v-else class="mini-spinner"></span></div>
                     </div>
 
                     <!-- 上海 -->
@@ -119,7 +136,7 @@
                         <div class="card-corner tr"></div>
                         <div class="card-corner bl"></div>
                         <div class="card-corner br"></div>
-                        <div class="card-label">上海</div>
+                        <div class="card-label">{{ t.cities.sh }}</div>
                         <div class="card-divider"></div>
                         <div class="card-row">
                             <span class="framework-tag react">R</span>
@@ -128,7 +145,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['sh']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['sh']}}</span><span v-else class="mini-spinner"></span></div>
                         <div class="card-row">
                             <span class="framework-tag vue">V</span>
                             <span class="card-value vue-val">
@@ -136,7 +153,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['sh']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['sh']}}</span><span v-else class="mini-spinner"></span></div>
                     </div>
 
                     <!-- 北京 -->
@@ -145,7 +162,7 @@
                         <div class="card-corner tr"></div>
                         <div class="card-corner bl"></div>
                         <div class="card-corner br"></div>
-                        <div class="card-label">北京</div>
+                        <div class="card-label">{{ t.cities.bj }}</div>
                         <div class="card-divider"></div>
                         <div class="card-row">
                             <span class="framework-tag react">R</span>
@@ -154,7 +171,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['bj']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['bj']}}</span><span v-else class="mini-spinner"></span></div>
                         <div class="card-row">
                             <span class="framework-tag vue">V</span>
                             <span class="card-value vue-val">
@@ -162,7 +179,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['bj']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['bj']}}</span><span v-else class="mini-spinner"></span></div>
                     </div>
 
                     <!-- 深圳 -->
@@ -171,7 +188,7 @@
                         <div class="card-corner tr"></div>
                         <div class="card-corner bl"></div>
                         <div class="card-corner br"></div>
-                        <div class="card-label">深圳</div>
+                        <div class="card-label">{{ t.cities.sz }}</div>
                         <div class="card-divider"></div>
                         <div class="card-row">
                             <span class="framework-tag react">R</span>
@@ -180,7 +197,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['sz']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['sz']}}</span><span v-else class="mini-spinner"></span></div>
                         <div class="card-row">
                             <span class="framework-tag vue">V</span>
                             <span class="card-value vue-val">
@@ -188,7 +205,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['sz']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['sz']}}</span><span v-else class="mini-spinner"></span></div>
                     </div>
 
                     <!-- 广州 -->
@@ -197,7 +214,7 @@
                         <div class="card-corner tr"></div>
                         <div class="card-corner bl"></div>
                         <div class="card-corner br"></div>
-                        <div class="card-label">广州</div>
+                        <div class="card-label">{{ t.cities.gz }}</div>
                         <div class="card-divider"></div>
                         <div class="card-row">
                             <span class="framework-tag react">R</span>
@@ -206,7 +223,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['gz']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].react)['gz']}}</span><span v-else class="mini-spinner"></span></div>
                         <div class="card-row">
                             <span class="framework-tag vue">V</span>
                             <span class="card-value vue-val">
@@ -214,7 +231,7 @@
                                 <span v-if="!data" class="mini-spinner"></span>
                             </span>
                         </div>
-                        <div class="card-yesterday">昨天: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['gz']}}</span><span v-else class="mini-spinner"></span></div>
+                        <div class="card-yesterday">{{ t.yesterday }}: <span v-if="data">{{JSON.parse(data[(data.length-2)].vue)['gz']}}</span><span v-else class="mini-spinner"></span></div>
                     </div>
                 </div>
             </section>
@@ -225,9 +242,9 @@
                     <div class="panel-header">
                         <div class="panel-title">
                             <span class="dot pulse cyan"></span>
-                            全国城市职位排行
+                            {{ t.rankTitle }}
                         </div>
-                        <button class="table-toggle-btn" @click="toggleTable" :title="tableCollapsed ? '展开排行' : '收起排行'">
+                        <button class="table-toggle-btn" @click="toggleTable" :title="tableCollapsed ? t.expandTable : t.collapseTable">
                             {{ tableCollapsed ? '▶' : '◀' }}
                         </button>
                     </div>
@@ -235,94 +252,94 @@
                         <table class="rank-table">
                             <thead>
                                 <tr>
-                                    <th>城市</th>
+                                    <th>{{ t.cityCol }}</th>
                                     <th><span class="th-react">React</span></th>
                                     <th><span class="th-vue">Vue</span></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><span class="city-name">重庆</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.cq }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['cq']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['cq']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">赣州</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.gzgz }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['gzgz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['gzgz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">杭州</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.hz }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['hz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['hz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">成都</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.cd }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['cd']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['cd']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">天津</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.tj }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['tj']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['tj']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">苏州</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.szsz }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['szsz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['szsz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">南京</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.nj }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['nj']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['nj']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">贵阳</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.gy }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['gy']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['gy']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">长沙</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.cs }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['cs']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['cs']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">沈阳</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.sy }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['sy']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['sy']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">济南</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.jn }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['jn']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['jn']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">宁波</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.nb }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['nb']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['nb']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">无锡</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.wx }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['wx']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['wx']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">郴州</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.cz }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['cz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['cz']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">大连</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.dl }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['dl']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['dl']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">合肥</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.hf }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['hf']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['hf']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
                                 <tr>
-                                    <td><span class="city-name">武汉</span></td>
+                                    <td><span class="city-name">{{ t.citiesRank.wh }}</span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.react)['wh']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                     <td><NumberGrows v-if="data_rs_more" :value="strs((JSON.parse(data_rs_more.vue)['wh']).toString())"></NumberGrows><span v-else class="mini-spinner"></span></td>
                                 </tr>
@@ -343,6 +360,160 @@
         P_GET_DATALIST_MORE ,
         P_GET_DATALIST
     } from '../config/api'
+
+    const LANGS = {
+        zh: {
+            addCity: '+ 增加城市',
+            feedback: '加群反馈',
+            title: '前端框架招聘热度',
+            subtitle: '数据来源: 各大主流招聘平台',
+            trendTitle: '职位趋势',
+            cities: { sh: '上海', bj: '北京', sz: '深圳', gz: '广州', ga: '全国' },
+            all: '全部',
+            loading: '数据加载中...',
+            dataUpdateHint: '数据每天凌晨更新',
+            yesterday: '昨天',
+            rankTitle: '全国城市职位排行',
+            cityCol: '城市',
+            jobCount: '职位数',
+            reactTrend: 'react趋势',
+            vueTrend: 'vue趋势',
+            citiesRank: {
+                cq: '重庆', gzgz: '赣州', hz: '杭州', cd: '成都', tj: '天津',
+                szsz: '苏州', nj: '南京', gy: '贵阳', cs: '长沙', sy: '沈阳',
+                jn: '济南', nb: '宁波', wx: '无锡', cz: '郴州', dl: '大连',
+                hf: '合肥', wh: '武汉'
+            },
+            expandTable: '展开排行',
+            collapseTable: '收起排行',
+        },
+        en: {
+            addCity: '+ Add City',
+            feedback: 'Feedback',
+            title: 'Frontend Framework Job Trends',
+            subtitle: 'Data source: Major recruitment platforms',
+            trendTitle: 'Job Trends',
+            cities: { sh: 'Shanghai', bj: 'Beijing', sz: 'Shenzhen', gz: 'Guangzhou', ga: 'National' },
+            all: 'All',
+            loading: 'Loading data...',
+            dataUpdateHint: 'Data updates daily at midnight',
+            yesterday: 'Yesterday',
+            rankTitle: 'National City Job Rankings',
+            cityCol: 'City',
+            jobCount: 'Jobs',
+            reactTrend: 'React Trend',
+            vueTrend: 'Vue Trend',
+            citiesRank: {
+                cq: 'Chongqing', gzgz: 'Ganzhou', hz: 'Hangzhou', cd: 'Chengdu', tj: 'Tianjin',
+                szsz: 'Suzhou', nj: 'Nanjing', gy: 'Guiyang', cs: 'Changsha', sy: 'Shenyang',
+                jn: "Ji'nan", nb: 'Ningbo', wx: 'Wuxi', cz: 'Chenzhou', dl: 'Dalian',
+                hf: 'Hefei', wh: 'Wuhan'
+            },
+            expandTable: 'Expand',
+            collapseTable: 'Collapse',
+        },
+        fr: {
+            addCity: '+ Ajouter ville',
+            feedback: 'Commentaires',
+            title: 'Tendances emplois frontend',
+            subtitle: 'Source: Principales plateformes de recrutement',
+            trendTitle: 'Tendances des postes',
+            cities: { sh: 'Shanghai', bj: 'Pékin', sz: 'Shenzhen', gz: 'Guangzhou', ga: 'National' },
+            all: 'Tout',
+            loading: 'Chargement...',
+            dataUpdateHint: 'Données mises à jour chaque nuit',
+            yesterday: 'Hier',
+            rankTitle: 'Classement national des villes',
+            cityCol: 'Ville',
+            jobCount: 'Postes',
+            reactTrend: 'Tendance React',
+            vueTrend: 'Tendance Vue',
+            citiesRank: {
+                cq: 'Chongqing', gzgz: 'Ganzhou', hz: 'Hangzhou', cd: 'Chengdu', tj: 'Tianjin',
+                szsz: 'Suzhou', nj: 'Nanjing', gy: 'Guiyang', cs: 'Changsha', sy: 'Shenyang',
+                jn: 'Jinan', nb: 'Ningbo', wx: 'Wuxi', cz: 'Chenzhou', dl: 'Dalian',
+                hf: 'Hefei', wh: 'Wuhan'
+            },
+            expandTable: 'Étendre',
+            collapseTable: 'Réduire',
+        },
+        ko: {
+            addCity: '+ 도시 추가',
+            feedback: '피드백',
+            title: '프론트엔드 프레임워크 채용 동향',
+            subtitle: '데이터 출처: 주요 채용 플랫폼',
+            trendTitle: '채용 동향',
+            cities: { sh: '상하이', bj: '베이징', sz: '선전', gz: '광저우', ga: '전국' },
+            all: '전체',
+            loading: '데이터 로딩 중...',
+            dataUpdateHint: '데이터는 매일 자정에 업데이트됩니다',
+            yesterday: '어제',
+            rankTitle: '전국 도시 채용 순위',
+            cityCol: '도시',
+            jobCount: '채용수',
+            reactTrend: 'React 추세',
+            vueTrend: 'Vue 추세',
+            citiesRank: {
+                cq: '충칭', gzgz: '간저우', hz: '항저우', cd: '청두', tj: '톈진',
+                szsz: '쑤저우', nj: '난징', gy: '구이양', cs: '창사', sy: '선양',
+                jn: '지난', nb: '닝보', wx: '우시', cz: '천저우', dl: '다롄',
+                hf: '허페이', wh: '우한'
+            },
+            expandTable: '펼치기',
+            collapseTable: '접기',
+        },
+        nl: {
+            addCity: '+ Stad toevoegen',
+            feedback: 'Feedback',
+            title: 'Frontend Framework Vacaturetrends',
+            subtitle: 'Gegevensbron: Grote wervingsplatforms',
+            trendTitle: 'Vacaturetrends',
+            cities: { sh: 'Shanghai', bj: 'Peking', sz: 'Shenzhen', gz: 'Guangzhou', ga: 'Nationaal' },
+            all: 'Alles',
+            loading: 'Laden...',
+            dataUpdateHint: 'Gegevens worden elke nacht bijgewerkt',
+            yesterday: 'Gisteren',
+            rankTitle: 'Nationale stadsrangschikking',
+            cityCol: 'Stad',
+            jobCount: 'Vacatures',
+            reactTrend: 'React trend',
+            vueTrend: 'Vue trend',
+            citiesRank: {
+                cq: 'Chongqing', gzgz: 'Ganzhou', hz: 'Hangzhou', cd: 'Chengdu', tj: 'Tianjin',
+                szsz: 'Suzhou', nj: 'Nanjing', gy: 'Guiyang', cs: 'Changsha', sy: 'Shenyang',
+                jn: 'Jinan', nb: 'Ningbo', wx: 'Wuxi', cz: 'Chenzhou', dl: 'Dalian',
+                hf: 'Hefei', wh: 'Wuhan'
+            },
+            expandTable: 'Uitvouwen',
+            collapseTable: 'Inklappen',
+        },
+        no: {
+            addCity: '+ Legg til by',
+            feedback: 'Tilbakemelding',
+            title: 'Frontend-rammeverk jobbtrender',
+            subtitle: 'Datakilde: Store rekrutteringsplattformer',
+            trendTitle: 'Jobbtrender',
+            cities: { sh: 'Shanghai', bj: 'Beijing', sz: 'Shenzhen', gz: 'Guangzhou', ga: 'Nasjonalt' },
+            all: 'Alle',
+            loading: 'Laster...',
+            dataUpdateHint: 'Data oppdateres hver natt',
+            yesterday: 'I går',
+            rankTitle: 'Nasjonal byrangering',
+            cityCol: 'By',
+            jobCount: 'Jobber',
+            reactTrend: 'React trend',
+            vueTrend: 'Vue trend',
+            citiesRank: {
+                cq: 'Chongqing', gzgz: 'Ganzhou', hz: 'Hangzhou', cd: 'Chengdu', tj: 'Tianjin',
+                szsz: 'Suzhou', nj: 'Nanjing', gy: 'Guiyang', cs: 'Changsha', sy: 'Shenyang',
+                jn: 'Jinan', nb: 'Ningbo', wx: 'Wuxi', cz: 'Chenzhou', dl: 'Dalian',
+                hf: 'Hefei', wh: 'Wuhan'
+            },
+            expandTable: 'Utvid',
+            collapseTable: 'Skjul',
+        },
+    }
+
     export default {
         name: "index",
         components:{
@@ -413,12 +584,22 @@
                 isac:false,
                 selectedYear: 'all',
                 tableCollapsed: false,
+                currentLang: 'zh',
+                langMenuOpen: false,
+                langLabels: {
+                    zh: '中文',
+                    en: 'English',
+                    fr: 'Français',
+                    ko: '한국어',
+                    nl: 'Nederlands',
+                    no: 'Norsk',
+                },
             }
         },
-        created(){
-
-        },
         computed:{
+            t() {
+                return LANGS[this.currentLang]
+            },
             availableYears() {
                 const years = [...new Set(this.timeDtae.map(d => d ? d.substring(0, 4) : ''))].filter(Boolean);
                 return years.sort();
@@ -453,56 +634,64 @@
                     this.drawPie('main')
                 })
             },
+            currentLang() {
+                this.$nextTick(function () {
+                    this.drawPie('main')
+                })
+            },
             ga_old: {
                 handler: function (val, oldval) {
-                    this.ga_oldval = oldval ? oldval : '未变动'
+                    this.ga_oldval = oldval ? oldval : '--'
                 },
             },
             sh_old: {
                 handler: function (val, oldval) {
-                    this.sh_oldval = oldval ? oldval : '未变动'
+                    this.sh_oldval = oldval ? oldval : '--'
                 },
             },
             bj_old: {
                 handler: function (val, oldval) {
-                    this.bj_oldval = oldval ? oldval : '未变动'
+                    this.bj_oldval = oldval ? oldval : '--'
                 },
             },
             sz_old: {
                 handler: function (val, oldval) {
-                    this.sz_oldval = oldval ? oldval : '未变动'
+                    this.sz_oldval = oldval ? oldval : '--'
                 },
             },
             gz_old: {
                 handler: function (val, oldval) {
-                    this.gz_oldval = oldval ? oldval : '未变动'
+                    this.gz_oldval = oldval ? oldval : '--'
                 },
             },
             ga_old_v: {
                 handler: function (val, oldval) {
-                    this.ga_oldval_v = oldval ? oldval : '未变动'
+                    this.ga_oldval_v = oldval ? oldval : '--'
                 },
             },
             sh_old_v: {
                 handler: function (val, oldval) {
-                    this.sh_oldval_v = oldval ? oldval : '未变动'
+                    this.sh_oldval_v = oldval ? oldval : '--'
                 },
             },
             bj_old_v: {
                 handler: function (val, oldval) {
-                    this.bj_oldval_v = oldval ? oldval : '未变动'
+                    this.bj_oldval_v = oldval ? oldval : '--'
                 },
             },
             sz_old_v: {
                 handler: function (val, oldval) {
-                    this.sz_oldval_v = oldval ? oldval : '未变动'
+                    this.sz_oldval_v = oldval ? oldval : '--'
                 },
             },
             gz_old_v: {
                 handler: function (val, oldval) {
-                    this.gz_oldval_v = oldval ? oldval : '未变动'
+                    this.gz_oldval_v = oldval ? oldval : '--'
                 },
             },
+        },
+        created(){
+            this.currentLang = this.detectLang()
         },
         mounted() {
             this.getCode()
@@ -519,6 +708,24 @@
         },
 
             methods:{
+                detectLang() {
+                    const lang = (navigator.language || navigator.userLanguage || 'zh').toLowerCase()
+                    const code = lang.split('-')[0]
+                    if (code === 'zh') return 'zh'
+                    if (code === 'fr') return 'fr'
+                    if (code === 'ko') return 'ko'
+                    if (code === 'nl') return 'nl'
+                    if (code === 'no' || code === 'nb' || code === 'nn') return 'no'
+                    if (code === 'en') return 'en'
+                    return 'en'
+                },
+                setLang(code) {
+                    this.currentLang = code
+                    this.langMenuOpen = false
+                },
+                handleGlobalClick() {
+                    if (this.langMenuOpen) this.langMenuOpen = false
+                },
                 addToList() {
                     this.toadd();
                 },
@@ -543,6 +750,8 @@
                     const filteredReact = this.filteredReactData;
                     const vueTrend = this.linearRegression(filteredVue);
                     const reactTrend = this.linearRegression(filteredReact);
+                    const reactTrendName = this.t.reactTrend;
+                    const vueTrendName = this.t.vueTrend;
                     this.charts.setOption({
                             grid:{
                                 x: isSmall ? 40 : (isMobile ? 50 : 65),
@@ -570,7 +779,7 @@
                             formatter: (params) => {
                                 let result = params[0].axisValueLabel + '<br/>';
                                 params.forEach(item => {
-                                    if (item.seriesName === 'react趋势' || item.seriesName === 'vue趋势') return;
+                                    if (item.seriesName === reactTrendName || item.seriesName === vueTrendName) return;
                                     const val = (this.isacitve4 && item.value === 1000) ? item.value + '+' : item.value;
                                     result += item.marker + item.seriesName + ': ' + val + '<br/>';
                                 });
@@ -638,13 +847,13 @@
                         yAxis: [
                             {
                                 type: 'value',
-                                name: isMobile ? '' : '职位数',
+                                name: isMobile ? '' : this.t.jobCount,
                                 nameTextStyle: {
                                     color: 'rgba(255,255,255,0.6)'
                                 },
                                 min: 100,
                                 axisLabel: {
-                                    formatter: isSmall ? '{value}' : '{value} 个',
+                                    formatter: isSmall ? '{value}' : ('{value}'),
                                     show: true,
                                     textStyle: {
                                         color: 'rgba(255,255,255,0.6)',
@@ -759,7 +968,7 @@
                                 },
                             },
                             {
-                                name: 'react趋势',
+                                name: reactTrendName,
                                 type: 'line',
                                 data: reactTrend,
                                 smooth: false,
@@ -776,7 +985,7 @@
                                 },
                             },
                             {
-                                name: 'vue趋势',
+                                name: vueTrendName,
                                 type: 'line',
                                 data: vueTrend,
                                 smooth: false,
@@ -1193,6 +1402,7 @@
 .header-right {
     display: flex;
     align-items: center;
+    gap: 12px;
 }
 .github-badges {
     display: flex;
@@ -1205,6 +1415,82 @@
 }
 .github-badges a:hover {
     opacity: 1;
+}
+
+/* ============ 语言切换器 ============ */
+.lang-switcher {
+    position: relative;
+}
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(0, 255, 242, 0.8);
+    background: transparent;
+    border: 1px solid rgba(0, 255, 242, 0.25);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    white-space: nowrap;
+}
+.lang-btn:hover {
+    color: #00fff2;
+    border-color: rgba(0, 255, 242, 0.6);
+    background: rgba(0, 255, 242, 0.06);
+}
+.lang-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+.lang-arrow {
+    font-size: 10px;
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+.lang-arrow.open {
+    transform: rotate(180deg);
+}
+.lang-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: rgba(8, 16, 45, 0.97);
+    border: 1px solid rgba(0, 255, 242, 0.25);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000;
+    min-width: 130px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 255, 242, 0.06);
+}
+.lang-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 9px 16px;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(0, 255, 242, 0.06);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+.lang-dropdown button:last-child {
+    border-bottom: none;
+}
+.lang-dropdown button:hover {
+    background: rgba(0, 255, 242, 0.08);
+    color: #00fff2;
+}
+.lang-dropdown button.active {
+    color: #00fff2;
+    background: rgba(0, 255, 242, 0.1);
+    font-weight: 600;
 }
 
 /* ============ 主体 ============ */
@@ -1769,6 +2055,10 @@
     }
     .city-name {
         font-size: 12px;
+    }
+
+    .lang-label {
+        display: none;
     }
 }
 
