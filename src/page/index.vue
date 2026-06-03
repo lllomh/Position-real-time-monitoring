@@ -50,6 +50,10 @@
                             <button :class="{active: isacitve4}" @click="getCrtyData(4)">全国</button>
                         </div>
                     </div>
+                    <div class="year-tabs" v-if="availableYears.length > 1">
+                        <button :class="{active: selectedYear === 'all'}" @click="setYear('all')">全部</button>
+                        <button v-for="y in availableYears" :key="y" :class="{active: selectedYear === y}" @click="setYear(y)">{{y}}</button>
+                    </div>
                     <div class="chart-container">
                         <div class="chart-loading" v-if="loading">
                             <div class="chart-spinner"></div>
@@ -216,13 +220,16 @@
             </section>
 
             <!-- 右侧：城市排行表 -->
-            <aside class="dash-right">
+            <aside class="dash-right" :class="{ collapsed: tableCollapsed }">
                 <div class="table-panel glass-card">
                     <div class="panel-header">
                         <div class="panel-title">
                             <span class="dot pulse cyan"></span>
                             全国城市职位排行
                         </div>
+                        <button class="table-toggle-btn" @click="toggleTable" :title="tableCollapsed ? '展开排行' : '收起排行'">
+                            {{ tableCollapsed ? '▶' : '◀' }}
+                        </button>
                     </div>
                     <div class="table-scroll">
                         <table class="rank-table">
@@ -404,16 +411,44 @@
                 obgdata:{},
                 charts: '',
                 isac:false,
+                selectedYear: 'all',
+                tableCollapsed: false,
             }
         },
         created(){
 
         },
         computed:{
-
+            availableYears() {
+                const years = [...new Set(this.timeDtae.map(d => d ? d.substring(0, 4) : ''))].filter(Boolean);
+                return years.sort();
+            },
+            filteredIndices() {
+                if (this.selectedYear === 'all' || !this.timeDtae.length) {
+                    return this.timeDtae.map((_, i) => i);
+                }
+                return this.timeDtae.reduce((acc, d, i) => {
+                    if (d && d.startsWith(this.selectedYear)) acc.push(i);
+                    return acc;
+                }, []);
+            },
+            filteredTimeDtae() {
+                return this.filteredIndices.map(i => this.timeDtae[i]);
+            },
+            filteredVueData() {
+                return this.filteredIndices.map(i => this.vueData[i]);
+            },
+            filteredReactData() {
+                return this.filteredIndices.map(i => this.reactData[i]);
+            },
         },
         watch: {
             timeDtae() {
+                this.$nextTick(function () {
+                    this.drawPie('main')
+                })
+            },
+            selectedYear() {
                 this.$nextTick(function () {
                     this.drawPie('main')
                 })
@@ -503,6 +538,11 @@
                     var isSmall = window.innerWidth <= 480;
                     var labelFontSize = isSmall ? 10 : (isMobile ? 11 : 13);
                     var showLabel = !isSmall;
+                    const filteredTime = this.filteredTimeDtae;
+                    const filteredVue = this.filteredVueData;
+                    const filteredReact = this.filteredReactData;
+                    const vueTrend = this.linearRegression(filteredVue);
+                    const reactTrend = this.linearRegression(filteredReact);
                     this.charts.setOption({
                             grid:{
                                 x: isSmall ? 40 : (isMobile ? 50 : 65),
@@ -526,6 +566,15 @@
                                 lineStyle: {
                                     color: 'rgba(0,255,242,0.3)'
                                 }
+                            },
+                            formatter: (params) => {
+                                let result = params[0].axisValueLabel + '<br/>';
+                                params.forEach(item => {
+                                    if (item.seriesName === 'react趋势' || item.seriesName === 'vue趋势') return;
+                                    const val = (this.isacitve4 && item.value === 1000) ? item.value + '+' : item.value;
+                                    result += item.marker + item.seriesName + ': ' + val + '<br/>';
+                                });
+                                return result;
                             }
                         },
                         toolbox: {
@@ -533,6 +582,7 @@
                             feature: {
                                 magicType: {
                                     show: true, type: ['line', 'bar'],
+                                    seriesIndex: { line: [0, 1], bar: [0, 1] },
                                     iconStyle:{
                                         color:'#fff',
                                         borderColor:'rgba(255,255,255,0.5)'
@@ -561,7 +611,7 @@
                         xAxis: [
                             {
                                 type: 'category',
-                                data:this.timeDtae,
+                                data: filteredTime,
                                 axisPointer: {
                                     type: 'shadow'
                                 },
@@ -640,7 +690,7 @@
                                 name: 'react',
                                 type: 'line',
                                 smooth: true,
-                                data: this.reactData,
+                                data: filteredReact,
                                 lineStyle: {
                                     normal: {
                                         color: '#ff4757',
@@ -663,6 +713,7 @@
                                         label: {
                                             show: showLabel,
                                             position: 'top',
+                                            formatter: (params) => (this.isacitve4 && params.value === 1000) ? params.value + '+' : params.value,
                                             textStyle: {
                                                 color: '#ff6b7a',
                                                 fontSize: labelFontSize
@@ -675,7 +726,7 @@
                                 name: 'vue',
                                 type: 'line',
                                 smooth: true,
-                                data: this.vueData,
+                                data: filteredVue,
                                 lineStyle: {
                                     normal: {
                                         color: '#ffd32a',
@@ -698,11 +749,46 @@
                                         label: {
                                             show: showLabel,
                                             position: 'top',
+                                            formatter: (params) => (this.isacitve4 && params.value === 1000) ? params.value + '+' : params.value,
                                             textStyle: {
                                                 color: '#ffd32a',
                                                 fontSize: labelFontSize
                                             }
                                         }
+                                    }
+                                },
+                            },
+                            {
+                                name: 'react趋势',
+                                type: 'line',
+                                data: reactTrend,
+                                smooth: false,
+                                symbol: 'none',
+                                legendHoverLink: false,
+                                itemStyle: { normal: { color: '#ff4757' } },
+                                lineStyle: {
+                                    normal: {
+                                        color: '#ff4757',
+                                        width: 2,
+                                        type: 'dashed',
+                                        opacity: 0.55,
+                                    }
+                                },
+                            },
+                            {
+                                name: 'vue趋势',
+                                type: 'line',
+                                data: vueTrend,
+                                smooth: false,
+                                symbol: 'none',
+                                legendHoverLink: false,
+                                itemStyle: { normal: { color: '#ffd32a' } },
+                                lineStyle: {
+                                    normal: {
+                                        color: '#ffd32a',
+                                        width: 2,
+                                        type: 'dashed',
+                                        opacity: 0.55,
                                     }
                                 },
                             },
@@ -885,9 +971,25 @@
                 let numArr = str ? str.match(/\d+/g) : '';
                 return numArr ?  +numArr.join('') : '0'
             },
+            linearRegression(data) {
+                const n = data.length;
+                if (n < 2) return [];
+                const start = Number(data[0]) || 0;
+                const end = Number(data[n - 1]) || 0;
+                return Array.from({ length: n }, (_, i) => Math.round(start + (end - start) * i / (n - 1)));
+            },
+            setYear(year) {
+                this.selectedYear = year;
+            },
              tasterNumber(str){
                  return str.replace(/[^0-9]/ig,"");
-             }
+             },
+            toggleTable() {
+                this.tableCollapsed = !this.tableCollapsed;
+                setTimeout(() => {
+                    if (this.charts) this.charts.resize();
+                }, 370);
+            },
 
         }
     }
@@ -1124,6 +1226,47 @@
 .dash-right {
     width: 320px;
     flex-shrink: 0;
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+.dash-right.collapsed {
+    width: 44px;
+}
+.dash-right.collapsed .panel-title {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, width 0.35s ease;
+}
+.dash-right.collapsed .panel-header {
+    padding: 14px 8px;
+    justify-content: center;
+}
+.dash-right.collapsed .table-scroll {
+    opacity: 0;
+    pointer-events: none;
+}
+.table-toggle-btn {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 255, 242, 0.08);
+    border: 1px solid rgba(0, 255, 242, 0.3);
+    border-radius: 4px;
+    color: #00fff2;
+    cursor: pointer;
+    font-size: 11px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    font-family: inherit;
+}
+.table-toggle-btn:hover {
+    background: rgba(0, 255, 242, 0.18);
+    border-color: #00fff2;
+    box-shadow: 0 0 10px rgba(0, 255, 242, 0.2);
 }
 
 /* ============ 面板头部 ============ */
@@ -1142,6 +1285,9 @@
     align-items: center;
     gap: 10px;
     letter-spacing: 1px;
+    transition: opacity 0.2s ease, width 0.35s ease;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .dot {
     width: 8px;
@@ -1159,6 +1305,35 @@
 @keyframes dotPulse {
     0%, 100% { opacity: 1; box-shadow: 0 0 10px #00fff2; }
     50% { opacity: 0.4; box-shadow: 0 0 4px #00fff2; }
+}
+
+/* ============ 年份筛选 ============ */
+.year-tabs {
+    display: flex;
+    gap: 6px;
+    padding: 6px 20px;
+    border-bottom: 1px solid rgba(0, 255, 242, 0.06);
+    flex-wrap: wrap;
+}
+.year-tabs button {
+    padding: 3px 14px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+.year-tabs button:hover {
+    color: rgba(255, 255, 255, 0.7);
+    border-color: rgba(0, 255, 242, 0.25);
+}
+.year-tabs button.active {
+    color: #00fff2;
+    border-color: #00fff2;
+    background: rgba(0, 255, 242, 0.08);
 }
 
 /* ============ 图表区域 ============ */
@@ -1354,6 +1529,7 @@
     flex: 1;
     overflow-y: auto;
     padding: 0 4px;
+    transition: opacity 0.2s ease;
 }
 .table-scroll::-webkit-scrollbar {
     width: 4px;
