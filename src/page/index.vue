@@ -59,6 +59,14 @@
                             <span class="dot pulse"></span>
                             {{ t.trendTitle }}
                         </div>
+                        <div class="btn-3d-group">
+                            <button class="btn-3d" @click="view3DMode = 'bar'" :disabled="!data || !data_rs_more">
+                                <span class="btn-3d-cube">⬛</span> {{ t.view3d }}
+                            </button>
+                            <button class="btn-3d btn-3d-globe" @click="view3DMode = 'globe'" :disabled="!data || !data_rs_more">
+                                <span class="btn-3d-cube">🌐</span> {{ t.view3dGlobe }}
+                            </button>
+                        </div>
                         <div class="city-tabs">
                             <button :class="{active: isacitve0}" @click="getCrtyData(0)">{{ t.cities.sh }}</button>
                             <button :class="{active: isacitve1}" @click="getCrtyData(1)">{{ t.cities.bj }}</button>
@@ -349,12 +357,28 @@
                 </div>
             </aside>
         </main>
+
+        <!-- 3D 视图覆盖层 -->
+        <Chart3D
+            v-if="view3DMode === 'bar'"
+            :cityData="allCityData3D"
+            :t="t"
+            @close="view3DMode = null"
+        />
+        <Globe3D
+            v-if="view3DMode === 'globe'"
+            :cityData="allCityData3D"
+            :t="t"
+            @close="view3DMode = null"
+        />
     </div>
 </template>
 
 <script>
     import NumberGrow from '../components/numver'
     import NumberGrows from '../components/numvers'
+    import Chart3D from '../components/Chart3D'
+    import Globe3D from '../components/Globe3D'
     import echarts from 'echarts'
     import {
         P_GET_DATALIST_MORE ,
@@ -386,6 +410,10 @@
             },
             expandTable: '展开排行',
             collapseTable: '收起排行',
+            view3d: '3D 柱图',
+            view3dGlobe: '3D 地球',
+            back2d: '← 2D 视图',
+            hint3d: '拖拽旋转 · 滚轮缩放',
         },
         en: {
             addCity: '+ Add City',
@@ -411,6 +439,10 @@
             },
             expandTable: 'Expand',
             collapseTable: 'Collapse',
+            view3d: '3D Bars',
+            view3dGlobe: '3D Globe',
+            back2d: '← 2D View',
+            hint3d: 'Drag to rotate · Scroll to zoom',
         },
         fr: {
             addCity: '+ Ajouter ville',
@@ -436,6 +468,10 @@
             },
             expandTable: 'Étendre',
             collapseTable: 'Réduire',
+            view3d: '3D Barres',
+            view3dGlobe: '3D Globe',
+            back2d: '← Vue 2D',
+            hint3d: 'Glisser pour tourner · Molette pour zoomer',
         },
         ko: {
             addCity: '+ 도시 추가',
@@ -461,6 +497,10 @@
             },
             expandTable: '펼치기',
             collapseTable: '접기',
+            view3d: '3D 막대',
+            view3dGlobe: '3D 지구본',
+            back2d: '← 2D 뷰',
+            hint3d: '드래그하여 회전 · 스크롤하여 확대',
         },
         nl: {
             addCity: '+ Stad toevoegen',
@@ -486,6 +526,10 @@
             },
             expandTable: 'Uitvouwen',
             collapseTable: 'Inklappen',
+            view3d: '3D Staafdiagram',
+            view3dGlobe: '3D Wereldbol',
+            back2d: '← 2D Weergave',
+            hint3d: 'Slepen om te draaien · Scrollen om te zoomen',
         },
         no: {
             addCity: '+ Legg til by',
@@ -511,6 +555,10 @@
             },
             expandTable: 'Utvid',
             collapseTable: 'Skjul',
+            view3d: '3D Søyler',
+            view3dGlobe: '3D Globus',
+            back2d: '← 2D Visning',
+            hint3d: 'Dra for å rotere · Rull for å zoome',
         },
     }
 
@@ -519,6 +567,8 @@
         components:{
             NumberGrow,
             NumberGrows,
+            Chart3D,
+            Globe3D,
     },
         data () {
             return {
@@ -584,6 +634,7 @@
                 isac:false,
                 selectedYear: 'all',
                 tableCollapsed: false,
+                view3DMode: null,
                 currentLang: 'zh',
                 langMenuOpen: false,
                 langLabels: {
@@ -621,6 +672,38 @@
             },
             filteredReactData() {
                 return this.filteredIndices.map(i => this.reactData[i]);
+            },
+            allCityData3D() {
+                if (!this.data || !this.data_rs_more) return []
+                const last = this.data[this.data.length - 1]
+                const r = JSON.parse(last.react)
+                const v = JSON.parse(last.vue)
+                const mr = JSON.parse(this.data_rs_more.react)
+                const mv = JSON.parse(this.data_rs_more.vue)
+                const cr = this.t.citiesRank
+                return [
+                    { name: this.t.cities.sh,  react: r.sh,       vue: v.sh,       lat: 31.2,  lon: 121.5 },
+                    { name: this.t.cities.bj,  react: r.bj,       vue: v.bj,       lat: 39.9,  lon: 116.4 },
+                    { name: this.t.cities.sz,  react: r.sz,        vue: v.sz,       lat: 22.5,  lon: 114.1 },
+                    { name: this.t.cities.gz,  react: r.gz,        vue: v.gz,       lat: 23.1,  lon: 113.3 },
+                    { name: cr.cq,             react: mr.cq  ||0,  vue: mv.cq  ||0, lat: 29.6,  lon: 106.5 },
+                    { name: cr.hz,             react: mr.hz  ||0,  vue: mv.hz  ||0, lat: 30.3,  lon: 120.2 },
+                    { name: cr.cd,             react: mr.cd  ||0,  vue: mv.cd  ||0, lat: 30.6,  lon: 104.1 },
+                    { name: cr.tj,             react: mr.tj  ||0,  vue: mv.tj  ||0, lat: 39.1,  lon: 117.2 },
+                    { name: cr.szsz,           react: mr.szsz||0,  vue: mv.szsz||0, lat: 31.3,  lon: 120.6 },
+                    { name: cr.nj,             react: mr.nj  ||0,  vue: mv.nj  ||0, lat: 32.1,  lon: 118.8 },
+                    { name: cr.wh,             react: mr.wh  ||0,  vue: mv.wh  ||0, lat: 30.6,  lon: 114.3 },
+                    { name: cr.hf,             react: mr.hf  ||0,  vue: mv.hf  ||0, lat: 31.9,  lon: 117.3 },
+                    { name: cr.cs,             react: mr.cs  ||0,  vue: mv.cs  ||0, lat: 28.2,  lon: 113.0 },
+                    { name: cr.jn,             react: mr.jn  ||0,  vue: mv.jn  ||0, lat: 36.7,  lon: 117.1 },
+                    { name: cr.nb,             react: mr.nb  ||0,  vue: mv.nb  ||0, lat: 29.9,  lon: 121.5 },
+                    { name: cr.wx,             react: mr.wx  ||0,  vue: mv.wx  ||0, lat: 31.6,  lon: 120.3 },
+                    { name: cr.dl,             react: mr.dl  ||0,  vue: mv.dl  ||0, lat: 38.9,  lon: 121.6 },
+                    { name: cr.sy,             react: mr.sy  ||0,  vue: mv.sy  ||0, lat: 41.8,  lon: 123.4 },
+                    { name: cr.gy,             react: mr.gy  ||0,  vue: mv.gy  ||0, lat: 26.6,  lon: 106.7 },
+                    { name: cr.gzgz,           react: mr.gzgz||0,  vue: mv.gzgz||0, lat: 25.8,  lon: 115.0 },
+                    { name: cr.cz,             react: mr.cz  ||0,  vue: mv.cz  ||0, lat: 25.8,  lon: 113.0 },
+                ]
             },
         },
         watch: {
@@ -1591,6 +1674,52 @@
 @keyframes dotPulse {
     0%, 100% { opacity: 1; box-shadow: 0 0 10px #00fff2; }
     50% { opacity: 0.4; box-shadow: 0 0 4px #00fff2; }
+}
+
+/* ============ 3D 视图按钮 ============ */
+.btn-3d {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffaf00;
+    background: transparent;
+    border: 1px solid rgba(255, 175, 0, 0.35);
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-family: inherit;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+.btn-3d:hover:not(:disabled) {
+    background: rgba(255, 175, 0, 0.1);
+    border-color: #ffaf00;
+    box-shadow: 0 0 14px rgba(255, 175, 0, 0.25);
+}
+.btn-3d:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+.btn-3d-cube {
+    font-size: 14px;
+    line-height: 1;
+}
+.btn-3d-group {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+.btn-3d-globe {
+    color: #00fff2;
+    border-color: rgba(0, 255, 242, 0.35);
+}
+.btn-3d-globe:hover:not(:disabled) {
+    background: rgba(0, 255, 242, 0.1);
+    border-color: #00fff2;
+    box-shadow: 0 0 14px rgba(0, 255, 242, 0.25);
 }
 
 /* ============ 年份筛选 ============ */
