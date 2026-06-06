@@ -60,7 +60,32 @@ module.exports = {
                     threshold: 10240,
                     minRatio: 0.8,
                 })
-            ]
+            ],
+            optimization: {
+                splitChunks: {
+                    chunks: 'all',
+                    cacheGroups: {
+                        echarts: {
+                            name: 'chunk-echarts',
+                            test: /[\\/]node_modules[\\/](echarts|zrender)[\\/]/,
+                            priority: 20,
+                            chunks: 'all'
+                        },
+                        vue: {
+                            name: 'chunk-vue',
+                            test: /[\\/]node_modules[\\/](vue|vue-router|vuex)[\\/]/,
+                            priority: 15,
+                            chunks: 'all'
+                        },
+                        vendors: {
+                            name: 'chunk-vendors',
+                            test: /[\\/]node_modules[\\/]/,
+                            priority: 10,
+                            chunks: 'all'
+                        }
+                    }
+                }
+            }
         }
     }
 }
